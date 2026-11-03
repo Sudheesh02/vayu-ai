@@ -461,7 +461,7 @@ export default function PredictiveAnalytics() {
                 ? 'Standby'
                 : 'Maintenance';
               return (
-                <option key={ac.tail_no} value={ac.tail_no} className="bg-slate-900 text-white">
+                <option key={ac.tail_no} value={ac.tail_no} className={isDark ? "bg-slate-900 text-white" : "bg-white text-slate-900"}>
                   {ac.tail_no} &bull; {ac.aircraft_type.split(' ')[0]} ({statusLabel})
                 </option>
               );
@@ -473,16 +473,18 @@ export default function PredictiveAnalytics() {
       {/* 2. SIMULATOR SCOPE SELECTOR: [ Single Tail Clearance ] | [ Squadron Formation Optimizer ] */}
       <GlassCard className="p-3.5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider font-sans">
+          <span className={`text-xs font-semibold uppercase tracking-wider font-sans ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Simulation Scope:
           </span>
-          <div className="flex items-center gap-1 p-1 rounded-xl bg-slate-900/60 border border-white/10 font-sans">
+          <div className={`flex items-center gap-1 p-1 rounded-xl font-sans ${isDark ? 'bg-slate-900/60 border border-white/10' : 'bg-slate-100 border border-slate-200'}`}>
             <button
               onClick={() => setSimMode('single')}
               className={`py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
                 simMode === 'single'
                   ? 'bg-blue-700 text-white border border-blue-500/30 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  : isDark
+                  ? 'text-slate-400 hover:text-white'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Crosshair className="w-3.5 h-3.5" />
@@ -493,7 +495,9 @@ export default function PredictiveAnalytics() {
               className={`py-1.5 px-3 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
                 simMode === 'formation'
                   ? 'bg-blue-700 text-white border border-blue-500/30 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  : isDark
+                  ? 'text-slate-400 hover:text-white'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Users className="w-3.5 h-3.5" />
@@ -505,12 +509,12 @@ export default function PredictiveAnalytics() {
         {simMode === 'formation' ? (
           <div className="flex flex-wrap items-center gap-3 font-sans">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-slate-400">Target Squadron:</span>
+              <span className={`text-xs font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Target Squadron:</span>
               <select
                 value={formationSquadron}
                 onChange={(e) => setFormationSquadron(e.target.value)}
                 className={`text-xs font-bold py-1.5 px-3 rounded-xl border focus:outline-none transition ${
-                  isDark ? 'bg-slate-900 border-white/15 text-sky-400' : 'bg-white border-slate-200 text-slate-800'
+                  isDark ? 'bg-slate-900 border-white/15 text-sky-400' : 'bg-white border-slate-300 text-slate-800'
                 }`}
               >
                 <option value="No. 222 Sqn 'Tigersharks'">No. 222 'Tigersharks' (Su-30MKI · AFS Thanjavur)</option>
@@ -520,7 +524,7 @@ export default function PredictiveAnalytics() {
             </div>
 
             <div className="flex items-center gap-1.5">
-              <span className="text-xs font-semibold text-slate-400">Formation Size:</span>
+              <span className={`text-xs font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Formation Size:</span>
               {[
                 { size: 2, label: '2-Ship Element' },
                 { size: 4, label: '4-Ship Flight' },
@@ -544,8 +548,8 @@ export default function PredictiveAnalytics() {
             </div>
           </div>
         ) : (
-          <span className="text-xs text-slate-400 font-sans">
-            Prognostic Target: <strong className="text-sky-400">{selectedTail}</strong>
+          <span className={`text-xs font-sans ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            Prognostic Target: <strong className={isDark ? 'text-sky-400 font-bold' : 'text-blue-700 font-bold'}>{selectedTail}</strong>
           </span>
         )}
       </GlassCard>
@@ -572,7 +576,7 @@ export default function PredictiveAnalytics() {
             <div className="space-y-4">
               {/* Mission Profile Selection */}
               <div>
-                <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                <label className={`text-xs font-semibold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                   Operational Mission Profile
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
@@ -597,7 +601,7 @@ export default function PredictiveAnalytics() {
                         }`}
                       >
                         <p className="text-xs font-bold">{m.label}</p>
-                        <span className="text-[10px] opacity-75 font-medium">{m.margin} safety margin</span>
+                        <span className={`text-[10px] font-medium ${active ? 'text-white/90' : isDark ? 'text-slate-400' : 'text-slate-500'}`}>{m.margin} safety margin</span>
                       </button>
                     );
                   })}
@@ -609,7 +613,7 @@ export default function PredictiveAnalytics() {
                 <div className="flex justify-between items-center mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                    <span className="text-xs font-semibold text-slate-300 dark:text-slate-300 light:text-slate-700 tracking-wide">
+                    <span className={`text-xs font-semibold tracking-wide ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                       Planned Sortie Duration
                     </span>
                   </div>
@@ -617,7 +621,7 @@ export default function PredictiveAnalytics() {
                     <span className="text-2xl font-black text-slate-900 dark:text-white font-sans tracking-tight">
                       {durationHours.toFixed(1)}
                     </span>
-                    <span className="text-xs font-semibold text-slate-400 uppercase">Hours</span>
+                    <span className={`text-xs font-semibold uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Hours</span>
                   </div>
                 </div>
 
@@ -658,14 +662,14 @@ export default function PredictiveAnalytics() {
                         onClick={() => setDurationHours(preset.hrs)}
                         className={`flex-1 py-1.5 px-1 rounded-lg text-center transition-all ${
                           isSelected
-                            ? 'bg-blue-600/20 border border-blue-500/50 text-sky-300 font-bold shadow-sm'
+                            ? (isDark ? 'bg-blue-600/20 border border-blue-500/50 text-sky-300 font-bold shadow-sm' : 'bg-blue-50 border border-blue-400 text-blue-700 font-bold shadow-sm')
                             : isDark
                             ? 'bg-white/5 border border-transparent text-slate-400 hover:text-slate-200 hover:bg-white/10'
-                            : 'bg-slate-200/60 border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-200'
+                            : 'bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-200'
                         }`}
                       >
                         <p className="text-[11px] font-bold leading-tight">{preset.label}</p>
-                        <p className="text-[9px] opacity-70 leading-tight hidden sm:block">{preset.sub}</p>
+                        <p className={`text-[9px] leading-tight hidden sm:block ${isSelected ? (isDark ? 'text-sky-300' : 'text-blue-700') : (isDark ? 'text-slate-400' : 'text-slate-500')}`}>{preset.sub}</p>
                       </button>
                     );
                   })}
@@ -675,35 +679,35 @@ export default function PredictiveAnalytics() {
               {/* Margin Calculation Metrics */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
                 <div className={`p-3 rounded-xl border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Available RUL</span>
-                  <p className="font-black text-base text-cyan-400 mt-1 font-sans">
-                    {(evalResult?.prognostic_state?.conservative_rul_hours || 0).toFixed(1)} <span className="text-[10px] font-normal text-slate-400">hrs</span>
+                  <span className={`text-[10px] font-semibold uppercase tracking-wider block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Available RUL</span>
+                  <p className={`font-black text-base mt-1 font-sans ${isDark ? 'text-cyan-400' : 'text-blue-700'}`}>
+                    {(evalResult?.prognostic_state?.conservative_rul_hours || 0).toFixed(1)} <span className={`text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>hrs</span>
                   </p>
                 </div>
                 <div className={`p-3 rounded-xl border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Required Margin</span>
-                  <p className="font-black text-base text-amber-400 mt-1 font-sans">
-                    {(evalResult?.mission_requested?.required_margin_hours || 0).toFixed(1)} <span className="text-[10px] font-normal text-slate-400">hrs</span>
+                  <span className={`text-[10px] font-semibold uppercase tracking-wider block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Required Margin</span>
+                  <p className={`font-black text-base mt-1 font-sans ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>
+                    {(evalResult?.mission_requested?.required_margin_hours || 0).toFixed(1)} <span className={`text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>hrs</span>
                   </p>
                 </div>
                 <div className={`p-3 rounded-xl border ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block">Net Life Margin</span>
+                  <span className={`text-[10px] font-semibold uppercase tracking-wider block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Net Life Margin</span>
                   <p className={`font-black text-base mt-1 font-sans ${
                     ((evalResult?.prognostic_state?.conservative_rul_hours || 0) - (evalResult?.mission_requested?.required_margin_hours || 0)) >= 0
-                      ? 'text-emerald-400'
-                      : 'text-rose-400'
+                      ? (isDark ? 'text-emerald-400' : 'text-emerald-600')
+                      : (isDark ? 'text-rose-400' : 'text-rose-600')
                   }`}>
-                    {(((evalResult?.prognostic_state?.conservative_rul_hours || 0) - (evalResult?.mission_requested?.required_margin_hours || 0))).toFixed(1)} <span className="text-[10px] font-normal text-slate-400">hrs</span>
+                    {(((evalResult?.prognostic_state?.conservative_rul_hours || 0) - (evalResult?.mission_requested?.required_margin_hours || 0))).toFixed(1)} <span className={`text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>hrs</span>
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-white/5 dark:border-white/5 text-[11px] text-slate-400 flex items-center justify-between">
-            <span>Airframe: <strong className="text-slate-200">{selectedTail}</strong> &bull; Base Station: <strong className="text-slate-200">{evalResult?.base_station || 'AFS Thanjavur'}</strong></span>
-            <span className="text-cyan-400 font-semibold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <div className={`mt-4 pt-3 border-t text-[11px] flex items-center justify-between ${isDark ? 'border-white/5 text-slate-400' : 'border-slate-200 text-slate-600'}`}>
+            <span>Airframe: <strong className={isDark ? 'text-slate-200' : 'text-slate-800'}>{selectedTail}</strong> &bull; Base Station: <strong className={isDark ? 'text-slate-200' : 'text-slate-800'}>{evalResult?.base_station || 'AFS Thanjavur'}</strong></span>
+            <span className={`${isDark ? 'text-cyan-400' : 'text-blue-700'} font-semibold flex items-center gap-1.5`}>
+              <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${isDark ? 'bg-cyan-400' : 'bg-blue-600'}`} />
               Prognostic Engine Synced
             </span>
           </div>
@@ -711,29 +715,41 @@ export default function PredictiveAnalytics() {
 
         {/* Right (5 cols): Dynamic Clearance Result Card */}
         <GlassCard className={`p-5 lg:col-span-5 flex flex-col justify-between transition-all ${
-          isGo
-            ? 'border-emerald-500/30 bg-gradient-to-br from-emerald-500/[0.08] via-transparent to-transparent shadow-[0_4px_30px_rgba(1,181,116,0.12)]'
+          isDark
+            ? isGo
+              ? 'border-emerald-500/30 bg-gradient-to-br from-emerald-500/[0.08] via-transparent to-transparent shadow-[0_4px_30px_rgba(1,181,116,0.12)]'
+              : isConditional
+              ? 'border-amber-500/30 bg-gradient-to-br from-amber-500/[0.08] via-transparent to-transparent shadow-[0_4px_30px_rgba(255,181,71,0.12)]'
+              : 'border-rose-500/30 bg-gradient-to-br from-rose-500/[0.08] via-transparent to-transparent shadow-[0_4px_30px_rgba(238,93,80,0.15)]'
+            : isGo
+            ? 'border-emerald-300 bg-gradient-to-br from-emerald-50/70 via-white to-white shadow-sm'
             : isConditional
-            ? 'border-amber-500/30 bg-gradient-to-br from-amber-500/[0.08] via-transparent to-transparent shadow-[0_4px_30px_rgba(255,181,71,0.12)]'
-            : 'border-rose-500/30 bg-gradient-to-br from-rose-500/[0.08] via-transparent to-transparent shadow-[0_4px_30px_rgba(238,93,80,0.15)]'
+            ? 'border-amber-300 bg-gradient-to-br from-amber-50/70 via-white to-white shadow-sm'
+            : 'border-rose-300 bg-gradient-to-br from-rose-50/70 via-white to-white shadow-sm'
         }`}>
           <div>
             {/* Header with tactical status tag */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+            <div className={`flex items-center justify-between border-b pb-3 mb-4 ${isDark ? 'border-white/10' : 'border-slate-200'}`}>
               <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${isGo ? 'bg-emerald-400' : isConditional ? 'bg-amber-400' : 'bg-rose-400'}`} />
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <span className={`w-2 h-2 rounded-full ${isGo ? 'bg-emerald-500' : isConditional ? 'bg-amber-500' : 'bg-rose-500'}`} />
+                <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                   Sortie Clearance Assessment
                 </span>
               </div>
               <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold border ${
-                isGo
-                  ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25'
+                isDark
+                  ? isGo
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25'
+                    : isConditional
+                    ? 'bg-amber-500/10 text-amber-400 border-amber-500/25'
+                    : 'bg-rose-500/10 text-rose-400 border-rose-500/25'
+                  : isGo
+                  ? 'bg-emerald-100 text-emerald-800 border-emerald-300 font-bold'
                   : isConditional
-                  ? 'bg-amber-500/10 text-amber-400 border-amber-500/25'
-                  : 'bg-rose-500/10 text-rose-400 border-rose-500/25'
+                  ? 'bg-amber-100 text-amber-800 border-amber-300 font-bold'
+                  : 'bg-rose-100 text-rose-800 border-rose-300 font-bold'
               }`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${isGo ? 'bg-emerald-400' : isConditional ? 'bg-amber-400' : 'bg-rose-400 animate-pulse'}`} />
+                <span className={`w-1.5 h-1.5 rounded-full ${isGo ? 'bg-emerald-500' : isConditional ? 'bg-amber-500' : 'bg-rose-500 animate-pulse'}`} />
                 {isGo ? 'Unrestricted Envelope' : isConditional ? 'Restricted Envelope' : 'Grounded / No-Go'}
               </span>
             </div>
@@ -741,35 +757,53 @@ export default function PredictiveAnalytics() {
             {/* Tactical Decision Banner */}
             <div className="flex items-center gap-3.5 my-4">
               {isGo ? (
-                <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-400/40 shadow-[0_0_24px_rgba(1,181,116,0.3),inset_0_1px_1px_rgba(255,255,255,0.25)] flex-shrink-0">
-                  <ShieldCheck className="w-7 h-7 text-emerald-400 drop-shadow-[0_2px_8px_rgba(1,181,116,0.5)]" />
+                <div className={`relative flex items-center justify-center w-14 h-14 rounded-2xl border flex-shrink-0 ${
+                  isDark
+                    ? 'bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border-emerald-400/40 shadow-[0_0_24px_rgba(1,181,116,0.3),inset_0_1px_1px_rgba(255,255,255,0.25)]'
+                    : 'bg-gradient-to-br from-emerald-100 to-teal-50 border-emerald-300 shadow-sm'
+                }`}>
+                  <ShieldCheck className={`w-7 h-7 ${isDark ? 'text-emerald-400 drop-shadow-[0_2px_8px_rgba(1,181,116,0.5)]' : 'text-emerald-600'}`} />
                 </div>
               ) : isConditional ? (
-                <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 border border-amber-400/40 shadow-[0_0_24px_rgba(255,181,71,0.3),inset_0_1px_1px_rgba(255,255,255,0.25)] flex-shrink-0">
-                  <ShieldAlert className="w-7 h-7 text-amber-400 drop-shadow-[0_2px_8px_rgba(255,181,71,0.5)]" />
+                <div className={`relative flex items-center justify-center w-14 h-14 rounded-2xl border flex-shrink-0 ${
+                  isDark
+                    ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/10 border-amber-400/40 shadow-[0_0_24px_rgba(255,181,71,0.3),inset_0_1px_1px_rgba(255,255,255,0.25)]'
+                    : 'bg-gradient-to-br from-amber-100 to-orange-50 border-amber-300 shadow-sm'
+                }`}>
+                  <ShieldAlert className={`w-7 h-7 ${isDark ? 'text-amber-400 drop-shadow-[0_2px_8px_rgba(255,181,71,0.5)]' : 'text-amber-600'}`} />
                 </div>
               ) : (
-                <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-500/20 to-red-600/10 border border-rose-400/40 shadow-[0_0_24px_rgba(238,93,80,0.35),inset_0_1px_1px_rgba(255,255,255,0.25)] flex-shrink-0">
-                  <ShieldX className="w-7 h-7 text-rose-400 animate-pulse drop-shadow-[0_2px_8px_rgba(238,93,80,0.5)]" />
+                <div className={`relative flex items-center justify-center w-14 h-14 rounded-2xl border flex-shrink-0 ${
+                  isDark
+                    ? 'bg-gradient-to-br from-rose-500/20 to-red-600/10 border-rose-400/40 shadow-[0_0_24px_rgba(238,93,80,0.35),inset_0_1px_1px_rgba(255,255,255,0.25)]'
+                    : 'bg-gradient-to-br from-rose-100 to-red-50 border-rose-300 shadow-sm'
+                }`}>
+                  <ShieldX className={`w-7 h-7 animate-pulse ${isDark ? 'text-rose-400 drop-shadow-[0_2px_8px_rgba(238,93,80,0.5)]' : 'text-rose-600'}`} />
                 </div>
               )}
 
               <div>
                 <div className="flex items-center gap-2.5">
-                  <h4 className="text-2xl font-black tracking-tight text-white font-sans">
+                  <h4 className={`text-2xl font-black tracking-tight font-sans ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {isGo ? 'Cleared for Sortie' : isConditional ? 'Conditional Clearance' : 'Sortie Withheld'}
                   </h4>
                   <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider ${
-                    isGo
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/35'
+                    isDark
+                      ? isGo
+                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/35'
+                        : isConditional
+                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/35'
+                        : 'bg-rose-500/20 text-rose-300 border border-rose-500/35'
+                      : isGo
+                      ? 'bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold'
                       : isConditional
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/35'
-                      : 'bg-rose-500/20 text-rose-300 border border-rose-500/35'
+                      ? 'bg-amber-100 text-amber-800 border border-amber-300 font-bold'
+                      : 'bg-rose-100 text-rose-800 border border-rose-300 font-bold'
                   }`}>
                     {isGo ? 'Go' : isConditional ? 'Caution' : 'No-Go'}
                   </span>
                 </div>
-                <p className="text-xs text-slate-300/90 font-medium mt-1 leading-snug">
+                <p className={`text-xs font-medium mt-1 leading-snug ${isDark ? 'text-slate-300/90' : 'text-slate-600'}`}>
                   {isGo
                     ? 'Full operational combat envelope cleared across all mission phases'
                     : isConditional
@@ -781,43 +815,51 @@ export default function PredictiveAnalytics() {
 
             {/* Assessment Cards */}
             <div className="space-y-3 mt-4 text-xs font-sans">
-              <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
-                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-white/[0.04] border-white/10' : 'bg-slate-50 border-slate-200 shadow-sm'}`}>
+                <div className={`flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                   <span>Engineering Prognostics Basis</span>
-                  <span className={`text-[10px] font-bold ${isGo ? 'text-emerald-400' : isConditional ? 'text-amber-400' : 'text-rose-400'}`}>
+                  <span className={`text-[10px] font-bold ${isDark ? (isGo ? 'text-emerald-400' : isConditional ? 'text-amber-400' : 'text-rose-400') : (isGo ? 'text-emerald-700' : isConditional ? 'text-amber-700' : 'text-rose-700')}`}>
                     {isGo ? '5/5 Stages Nominal' : isConditional ? 'Degradation Caution' : 'Critical Threshold Exceeded'}
                   </span>
                 </div>
-                <p className="text-slate-200 leading-relaxed text-xs">
+                <p className={`leading-relaxed text-xs ${isDark ? 'text-slate-200' : 'text-slate-800 font-medium'}`}>
                   {evalResult?.reasons?.join(' ')}
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/10">
-                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-white/[0.04] border-white/10' : 'bg-slate-50 border-slate-200 shadow-sm'}`}>
+                <div className={`flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                   <span>Operational Flight Directives</span>
-                  <span className="text-cyan-300 text-[10px] font-bold">Standard Procedures</span>
+                  <span className={`text-[10px] font-bold ${isDark ? 'text-cyan-300' : 'text-blue-700'}`}>Standard Procedures</span>
                 </div>
-                <p className="text-cyan-200/90 font-medium text-xs leading-relaxed">
+                <p className={`font-medium text-xs leading-relaxed ${isDark ? 'text-cyan-200/90' : 'text-blue-900'}`}>
                   {evalResult?.recommendations?.join(' ')}
                 </p>
               </div>
 
               {/* AI Multimodal NLP Snag Log-to-Sensor Fusion Badge */}
               <div className={`p-3.5 rounded-xl border transition-all ${
-                activeFlightLog?.nlp_fusion
-                  ? 'bg-blue-500/10 border-blue-500/30'
-                  : 'bg-emerald-500/10 border-emerald-500/25'
+                isDark
+                  ? activeFlightLog?.nlp_fusion
+                    ? 'bg-blue-500/10 border-blue-500/30'
+                    : 'bg-emerald-500/10 border-emerald-500/25'
+                  : activeFlightLog?.nlp_fusion
+                  ? 'bg-sky-50 border-sky-200'
+                  : 'bg-emerald-50 border-emerald-200 shadow-sm'
               }`}>
                 <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider mb-2">
-                  <span className="flex items-center gap-1.5 text-cyan-300">
-                    <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className={`flex items-center gap-1.5 ${isDark ? 'text-cyan-300' : 'text-emerald-800'}`}>
+                    <Sparkles className={`w-3.5 h-3.5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                     AI Multimodal NLP Snag-to-Sensor Fusion
                   </span>
                   <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${
-                    activeFlightLog?.nlp_fusion
-                      ? 'bg-blue-500/20 text-cyan-200 border border-blue-500/30'
-                      : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                    isDark
+                      ? activeFlightLog?.nlp_fusion
+                        ? 'bg-blue-500/20 text-cyan-200 border border-blue-500/30'
+                        : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                      : activeFlightLog?.nlp_fusion
+                      ? 'bg-sky-100 text-sky-800 border border-sky-300'
+                      : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
                   }`}>
                     {activeFlightLog?.nlp_fusion ? '98.4% Fused Confidence (+22.4% Boost)' : '100% Cleared (0 Open Snags)'}
                   </span>
@@ -826,53 +868,53 @@ export default function PredictiveAnalytics() {
                 {activeFlightLog?.nlp_fusion ? (
                   <div className="space-y-2 text-xs">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="text-[11px] text-slate-400">Extracted Pilot Debrief Entities:</span>
-                      <span className="px-2 py-0.5 rounded bg-white/10 text-amber-300 font-semibold text-[11px] border border-white/10">
+                      <span className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Extracted Pilot Debrief Entities:</span>
+                      <span className={`px-2 py-0.5 rounded font-semibold text-[11px] border ${isDark ? 'bg-white/10 text-amber-300 border-white/10' : 'bg-amber-100 text-amber-900 border-amber-300'}`}>
                         [Vibration Harmonic Spike]
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-white/10 text-amber-300 font-semibold text-[11px] border border-white/10">
+                      <span className={`px-2 py-0.5 rounded font-semibold text-[11px] border ${isDark ? 'bg-white/10 text-amber-300 border-white/10' : 'bg-amber-100 text-amber-900 border-amber-300'}`}>
                         [Station 30 Thermal Surge]
                       </span>
                     </div>
                     <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="text-[11px] text-slate-400">Correlated Sensor Channels:</span>
-                      <span className="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 font-semibold text-[11px] border border-cyan-500/30">
+                      <span className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Correlated Sensor Channels:</span>
+                      <span className={`px-2 py-0.5 rounded font-semibold text-[11px] border ${isDark ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30' : 'bg-sky-100 text-sky-900 border-sky-300'}`}>
                         T30 (+28.4°R drift)
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 font-semibold text-[11px] border border-cyan-500/30">
+                      <span className={`px-2 py-0.5 rounded font-semibold text-[11px] border ${isDark ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30' : 'bg-sky-100 text-sky-900 border-sky-300'}`}>
                         Acoustic Vibration (0.94)
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-300 italic pt-1 border-t border-white/5">
+                    <p className={`text-[11px] italic pt-1 border-t ${isDark ? 'border-white/5 text-slate-300' : 'border-slate-200 text-slate-700'}`}>
                       "{activeFlightLog.pilot_remarks}"
                     </p>
                   </div>
                 ) : (
-                  <p className="text-xs text-emerald-200/90 leading-relaxed">
-                    Continuous NLP debrief log mining verified zero open pilot snags matching live telemetry harmonics for tail <strong className="text-white">{selectedTail}</strong>.
+                  <p className={`text-xs leading-relaxed ${isDark ? 'text-emerald-200/90' : 'text-emerald-900 font-medium'}`}>
+                    Continuous NLP debrief log mining verified zero open pilot snags matching live telemetry harmonics for tail <strong className={isDark ? 'text-white' : 'text-slate-900'}>{selectedTail}</strong>.
                   </p>
                 )}
               </div>
 
               {/* Spares Status Cross-Reference */}
               {evalResult?.spares_status && (
-                <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between text-xs font-sans">
+                <div className={`p-3.5 rounded-xl border flex items-center justify-between text-xs font-sans ${isDark ? 'bg-white/[0.04] border-white/10' : 'bg-slate-50 border-slate-200 shadow-sm'}`}>
                   <div>
-                    <span className="text-slate-400 text-[10px] font-semibold uppercase tracking-wider block">
+                    <span className={`text-[10px] font-semibold uppercase tracking-wider block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       {evalResult.spares_status.stock_sufficient ? 'Operational LRU Subsystem' : 'Critical Impending LRU Component'}
                     </span>
-                    <p className={`font-bold text-xs mt-0.5 ${evalResult.spares_status.stock_sufficient ? 'text-emerald-300' : 'text-rose-300'}`}>
+                    <p className={`font-bold text-xs mt-0.5 ${evalResult.spares_status.stock_sufficient ? (isDark ? 'text-emerald-300' : 'text-emerald-700') : (isDark ? 'text-rose-300' : 'text-rose-700')}`}>
                       {evalResult.spares_status.component_name}
                     </p>
                   </div>
                   <div className="text-right">
                     <span className={`inline-flex items-center gap-1.5 font-bold text-xs ${
-                      evalResult.spares_status.stock_sufficient ? 'text-emerald-400' : 'text-rose-400'
+                      evalResult.spares_status.stock_sufficient ? (isDark ? 'text-emerald-400' : 'text-emerald-700') : (isDark ? 'text-rose-400' : 'text-rose-700')
                     }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${evalResult.spares_status.stock_sufficient ? 'bg-emerald-400' : 'bg-rose-400'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${evalResult.spares_status.stock_sufficient ? (isDark ? 'bg-emerald-400' : 'bg-emerald-600') : (isDark ? 'bg-rose-400' : 'bg-rose-600')}`} />
                       {evalResult.spares_status.stock_sufficient ? 'All Spares Ready' : `${evalResult.spares_status.quantity_on_hand} in Base Stock`}
                     </span>
-                    <p className="text-[10px] text-slate-400 mt-0.5">
+                    <p className={`text-[10px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       {evalResult.spares_status.stock_sufficient ? 'Forward Depot Inventory Adequate' : 'Immediate Depot Reorder Active'}
                     </p>
                   </div>
@@ -986,7 +1028,7 @@ export default function PredictiveAnalytics() {
                           }`}
                         >
                           <p className="text-xs font-bold font-sans">{m.label}</p>
-                          <span className="text-[10px] opacity-75 font-medium">{m.margin} safety margin</span>
+                          <span className={`text-[10px] font-medium ${active ? 'text-white/90' : isDark ? 'text-slate-400' : 'text-slate-500'}`}>{m.margin} safety margin</span>
                         </button>
                       );
                     })}
@@ -996,7 +1038,7 @@ export default function PredictiveAnalytics() {
                 {/* Duration Slider */}
                 <div className={`p-4 rounded-2xl border transition-all ${isDark ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200 shadow-sm'}`}>
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-semibold text-slate-300 font-sans">Formation Sortie Duration</span>
+                    <span className={`text-xs font-semibold font-sans ${isDark ? "text-slate-300" : "text-slate-700"}`}>Formation Sortie Duration</span>
                     <div className="flex items-baseline gap-1.5">
                       <span className="text-2xl font-black text-sky-400 font-sans tracking-tight">{durationHours.toFixed(1)}</span>
                       <span className="text-xs font-semibold text-slate-400 uppercase font-sans">Hours / Aircraft</span>
@@ -1020,7 +1062,7 @@ export default function PredictiveAnalytics() {
                 {/* Primary Selected Formation Aircraft Bento Cards */}
                 <div>
                   <div className="flex items-center justify-between mb-2.5 font-sans">
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                       Recommended {formationSize} Ship Combat Flight Roster
                     </span>
                     <span className="text-[11px] text-emerald-400 font-bold">
@@ -1063,7 +1105,7 @@ export default function PredictiveAnalytics() {
                           <div className="mt-2.5 pt-2 border-t border-white/5 grid grid-cols-2 gap-2 text-xs">
                             <div>
                               <span className="text-[10px] text-slate-400 block">Conservative RUL</span>
-                              <span className="font-bold font-mono text-slate-200">{plane.conservativeRul}h</span>
+                              <span className={`font-bold font-mono ${isDark ? "text-slate-200" : "text-slate-800"}`}>{plane.conservativeRul}h</span>
                             </div>
                             <div>
                               <span className="text-[10px] text-slate-400 block">Post Sortie RUL</span>
@@ -1104,7 +1146,7 @@ export default function PredictiveAnalytics() {
                           >
                             <div className="min-w-0">
                               <div className="flex items-center gap-2">
-                                <span className="font-bold text-xs text-slate-200 font-mono whitespace-nowrap">
+                                <span className={`font-bold text-xs font-mono whitespace-nowrap ${isDark ? "text-slate-200" : "text-slate-800"}`}>
                                   {plane.tail_no}
                                 </span>
                                 <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border whitespace-nowrap ${
@@ -1122,7 +1164,7 @@ export default function PredictiveAnalytics() {
                               </p>
                             </div>
                             <div className="text-right shrink-0 font-mono">
-                              <span className="text-xs font-bold text-slate-300 block">{plane.conservativeRul}h</span>
+                              <span className={`text-xs font-bold block ${isDark ? "text-slate-300" : "text-slate-800"}`}>{plane.conservativeRul}h</span>
                               <span className="text-[9px] text-slate-400">Cons. RUL</span>
                             </div>
                           </div>
@@ -1135,7 +1177,7 @@ export default function PredictiveAnalytics() {
             </div>
 
             <div className="mt-4 pt-3 border-t border-white/5 text-[11px] text-slate-400 flex items-center justify-between font-sans">
-              <span>Target Squadron: <strong className="text-slate-200">{formationSquadron}</strong></span>
+              <span>Target Squadron: <strong className={isDark ? "text-slate-200" : "text-slate-800"}>{formationSquadron}</strong></span>
               <span className="text-sky-400 font-semibold font-mono">
                 Formation Min Margin: +{formationRoster.selected4[formationRoster.selected4.length - 1]?.postMissionRul || 0}h
               </span>
@@ -1143,16 +1185,16 @@ export default function PredictiveAnalytics() {
           </GlassCard>
 
           {/* Right (5 cols): Formation Operational Feasibility & Burnout Prevention */}
-          <GlassCard className="p-5 lg:col-span-5 flex flex-col justify-between border-slate-800 bg-slate-900/90 shadow-sm">
+          <GlassCard className={`p-5 lg:col-span-5 flex flex-col justify-between shadow-sm ${isDark ? 'border-slate-800 bg-slate-900/90' : 'border-slate-200 bg-white'}`}>
             <div>
               <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-4 font-sans">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                  <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                     Formation Sortie Clearance
                   </span>
                 </div>
-                <span className="px-3 py-1 rounded-full text-[11px] font-semibold border bg-slate-800/90 text-slate-200 border-slate-700">
+                <span className={`px-3 py-1 rounded-full text-[11px] font-semibold border ${isDark ? "bg-slate-800/90 text-slate-200 border-slate-700" : "bg-emerald-100 text-emerald-800 border-emerald-300 font-bold"}`}>
                   Full Squadron Cleared
                 </span>
               </div>
@@ -1164,7 +1206,7 @@ export default function PredictiveAnalytics() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2.5">
-                    <h4 className="text-xl font-bold tracking-tight text-white font-sans">
+                    <h4 className={`text-xl font-bold tracking-tight font-sans ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {formationSize} Ship Formation {formationRoster.clearedCount === formationSize ? 'Cleared' : 'Advisory'}
                     </h4>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${
@@ -1184,34 +1226,34 @@ export default function PredictiveAnalytics() {
               {/* Formation Metrics Bento */}
               <div className="space-y-3 mt-4 text-xs font-sans">
                 {/* Box 1: Fleet Availability Post Flight */}
-                <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
-                  <div className="flex items-center justify-between text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-slate-800/60 border-slate-700/60' : 'bg-slate-50 border-slate-200'}`}>
+                  <div className={`flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                     <span>Fleet Availability Post Flight</span>
-                    <span className="text-emerald-400 font-bold">83.3% Readiness</span>
+                    <span className={`font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>83.3% Readiness</span>
                   </div>
-                  <p className="text-slate-300 leading-relaxed text-xs">
+                  <p className={`leading-relaxed text-xs ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                     Mission execution preserves 83.3% squadron readiness, exceeding MoD 75.0% operational mandate with all scheduled airframes combat available.
                   </p>
                 </div>
 
                 {/* Box 2: Airframe Fatigue & Fleet Rotation */}
-                <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
-                  <div className="flex items-center justify-between text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-slate-800/60 border-slate-700/60' : 'bg-slate-50 border-slate-200'}`}>
+                  <div className={`flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider mb-1.5 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                     <span>Airframe Fatigue and Fleet Rotation</span>
-                    <span className="text-sky-400 text-[10px] font-bold">Active Rotation</span>
+                    <span className={`text-[10px] font-bold ${isDark ? 'text-sky-400' : 'text-blue-700'}`}>Active Rotation</span>
                   </div>
-                  <p className="text-slate-300 leading-relaxed text-xs">
+                  <p className={`leading-relaxed text-xs ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                     High time airframes withheld from heavy sorties and allocated to QRA standby to prevent premature base overhaul cycles.
                   </p>
                 </div>
 
                 {/* Box 3: Technical Log & Snag Verification */}
-                <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60">
-                  <div className="flex items-center justify-between text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">
+                <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-slate-800/60 border-slate-700/60' : 'bg-slate-50 border-slate-200'}`}>
+                  <div className={`flex items-center justify-between text-[11px] font-bold uppercase tracking-wider mb-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                     <span>Technical Log and Snag Status</span>
-                    <span className="text-emerald-400 text-[10px] font-bold">{formationRoster.clearedCount}/{formationSize} Verified</span>
+                    <span className={`text-[10px] font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>{formationRoster.clearedCount}/{formationSize} Verified</span>
                   </div>
-                  <p className="text-slate-300 text-xs leading-relaxed">
+                  <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                     Pilot debrief logs and snag registers clear across assigned airframes with zero pending rectification orders on cleared tails.
                   </p>
                 </div>
@@ -1219,7 +1261,7 @@ export default function PredictiveAnalytics() {
             </div>
 
             <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-sans">
-              <span className="text-slate-400">Sortie Code: <strong className="text-slate-200">IAF MSN 2026 CAP4</strong></span>
+              <span className={isDark ? "text-slate-400" : "text-slate-500"}>Sortie Code: <strong className={isDark ? "text-slate-200" : "text-slate-800"}>IAF MSN 2026 CAP4</strong></span>
               <span className="text-emerald-400 font-bold">Air Tasking Order Cleared</span>
             </div>
           </GlassCard>
@@ -1240,13 +1282,13 @@ export default function PredictiveAnalytics() {
               Chronological countdown of impending component degradation across fleet airframes
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/5 text-slate-300 border border-white/10">
+          <div className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl border ${isDark ? 'bg-white/5 text-slate-300 border-white/10' : 'bg-slate-100 text-slate-700 border-slate-200'}`}>
             <Clock className="w-3.5 h-3.5 text-sky-400" />
             <span>30-Day Fleet Horizon</span>
           </div>
         </div>
 
-        <div className="relative pl-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-700 space-y-4">
+        <div className={`relative pl-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 ${isDark ? 'before:bg-slate-700' : 'before:bg-slate-200'} space-y-4`}>
           {faultTimeline.map((item) => {
             const isCritical = item.severity === 'CRITICAL';
             const isCaution = item.severity === 'CAUTION';
@@ -1274,7 +1316,7 @@ export default function PredictiveAnalytics() {
                     <span className="font-extrabold text-sky-400 text-sm tracking-tight">
                       {item.tail_no}
                     </span>
-                    <span className="text-[11px] px-2 py-0.5 rounded-md font-semibold bg-white/5 text-slate-300 border border-white/10">
+                    <span className={`text-[11px] px-2 py-0.5 rounded-md font-semibold border ${isDark ? 'bg-white/5 text-slate-300 border-white/10' : 'bg-slate-100 text-slate-700 border-slate-200'}`}>
                       in {item.horizon_hours.replace('+', '')}
                     </span>
                     <span className="text-xs font-medium text-slate-400">
@@ -1351,12 +1393,12 @@ export default function PredictiveAnalytics() {
                   {sub.risks.map((cell, cIdx) => {
                     const risk = cell.risk_pct;
                     const cellColor = risk > 70
-                      ? 'bg-rose-500/25 text-rose-300 border-rose-500/40 hover:bg-rose-500/40'
+                      ? (isDark ? 'bg-rose-500/25 text-rose-300 border-rose-500/40 hover:bg-rose-500/40' : 'bg-rose-100 text-rose-800 border-rose-300 hover:bg-rose-200')
                       : risk > 50
-                      ? 'bg-amber-500/25 text-amber-300 border-amber-500/40 hover:bg-amber-500/40'
+                      ? (isDark ? 'bg-amber-500/25 text-amber-300 border-amber-500/40 hover:bg-amber-500/40' : 'bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200')
                       : risk > 30
-                      ? 'bg-sky-500/15 text-sky-300 border-sky-500/25 hover:bg-sky-500/30'
-                      : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/35';
+                      ? (isDark ? 'bg-sky-500/15 text-sky-300 border-sky-500/25 hover:bg-sky-500/30' : 'bg-sky-100 text-sky-800 border-sky-300 hover:bg-sky-200')
+                      : (isDark ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-500/35' : 'bg-emerald-100 text-emerald-800 border-emerald-300 hover:bg-emerald-200');
 
                     return (
                       <td key={cIdx} className="p-2 text-center">
@@ -1380,16 +1422,16 @@ export default function PredictiveAnalytics() {
           <div className="mt-4 p-3.5 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex flex-wrap items-center justify-between gap-3 text-xs font-sans animate-fadeIn">
             <div>
               <span className="text-sky-400 font-bold uppercase tracking-wider">{selectedHeatmapCell.subsystem}</span> &bull; 
-              <span className="text-white ml-1 font-semibold">{selectedHeatmapCell.regime}</span>
-              <p className="text-slate-300 mt-1 leading-relaxed">
-                <strong className="text-white">Primary Physics Driver:</strong> {selectedHeatmapCell.driver}
+              <span className={`ml-1 font-semibold ${isDark ? "text-white" : "text-slate-900"}`}>{selectedHeatmapCell.regime}</span>
+              <p className={`mt-1 leading-relaxed ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+                <strong className={isDark ? "text-white" : "text-slate-900"}>Primary Physics Driver:</strong> {selectedHeatmapCell.driver}
               </p>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-base font-extrabold text-sky-400 tracking-tight">{selectedHeatmapCell.risk}% Failure Prob</span>
               <button
                 onClick={() => setSelectedHeatmapCell(null)}
-                className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 text-xs font-medium transition"
+                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition ${isDark ? "bg-white/10 hover:bg-white/20 text-slate-300" : "bg-slate-200 hover:bg-slate-300 text-slate-800"}`}
               >
                 Close
               </button>
@@ -1616,14 +1658,14 @@ export default function PredictiveAnalytics() {
           <div className={`p-3.5 rounded-xl border text-xs font-sans ${
             isDark ? 'bg-white/5 border-white/5 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
           }`}>
-            <div className="flex flex-wrap items-center gap-1.5 mb-1 text-sky-400 font-bold">
+            <div className={`flex flex-wrap items-center gap-1.5 mb-1 font-bold ${isDark ? 'text-sky-400' : 'text-blue-700'}`}>
               <span>Primary Degradation Drivers ({selectedTail}):</span>
-              <span className="text-white">
+              <span className={isDark ? 'text-white' : 'text-slate-900 font-bold'}>
                 {shapAttribution[0]?.feature} (+{shapAttribution[0]?.weight}%) &amp; {shapAttribution[1]?.feature} (+{shapAttribution[1]?.weight}%)
               </span>
             </div>
-            <p className="text-[11px] text-slate-300 leading-relaxed">
-              TreeSHAP attribution for <strong className="text-white">{selectedTail}</strong> identifies {shapAttribution[0]?.feature} and {shapAttribution[1]?.feature} as the dominant RUL wear contributors, while {shapAttribution[3]?.feature} provides {shapAttribution[3]?.weight}% protective life margin.
+            <p className={`text-[11px] leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+              TreeSHAP attribution for <strong className={isDark ? 'text-white' : 'text-slate-900'}>{selectedTail}</strong> identifies {shapAttribution[0]?.feature} and {shapAttribution[1]?.feature} as the dominant RUL wear contributors, while {shapAttribution[3]?.feature} provides {shapAttribution[3]?.weight}% protective life margin.
             </p>
           </div>
         </GlassCard>
@@ -1713,19 +1755,19 @@ export default function PredictiveAnalytics() {
                     {b.catchRate}
                   </span>
                 </div>
-                <p className="text-[11px] font-semibold text-slate-300 mt-2">{b.profile}</p>
-                <p className="text-[10px] text-slate-400 mt-0.5">{b.model}</p>
+                <p className={`text-[11px] font-semibold mt-2 ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{b.profile}</p>
+                <p className={`text-[10px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{b.model}</p>
 
-                <div className="mt-3 pt-2.5 border-t border-white/5 grid grid-cols-2 gap-2 text-xs">
+                <div className={`mt-3 pt-2.5 border-t grid grid-cols-2 gap-2 text-xs ${isDark ? 'border-white/5' : 'border-slate-200'}`}>
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Ensemble RMSE</span>
-                    <span className="font-mono font-extrabold text-base text-white">{b.rmse}</span>
-                    <span className="text-[9px] text-emerald-400 block font-mono">Cap: {b.cappedRmse}</span>
+                    <span className={`text-[10px] block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Ensemble RMSE</span>
+                    <span className={`font-mono font-extrabold text-base ${isDark ? 'text-white' : 'text-slate-900'}`}>{b.rmse}</span>
+                    <span className={`text-[9px] block font-mono font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>Cap: {b.cappedRmse}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block">NASA Score</span>
-                    <span className="font-mono font-bold text-base text-slate-200">{b.nasaScore}</span>
-                    <span className="text-[9px] text-sky-400 block font-mono">Lead: {b.leadCycles}</span>
+                    <span className={`text-[10px] block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>NASA Score</span>
+                    <span className={`font-mono font-bold text-base ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{b.nasaScore}</span>
+                    <span className={`text-[9px] block font-mono font-bold ${isDark ? 'text-sky-400' : 'text-blue-700'}`}>Lead: {b.leadCycles}</span>
                   </div>
                 </div>
               </div>
@@ -1734,34 +1776,34 @@ export default function PredictiveAnalytics() {
 
           {/* Card 5: Online RLS Drift Adaptation Scorecard */}
           <div className={`p-4 rounded-2xl border flex flex-col justify-between ${
-            isDark ? 'bg-slate-900/90 border-blue-500/35' : 'bg-blue-50/50 border-blue-200'
+            isDark ? 'bg-slate-900/90 border-blue-500/35' : 'bg-sky-50/70 border-sky-200 shadow-sm'
           }`}>
             <div>
               <div className="flex items-center justify-between gap-2">
-                <span className="font-mono font-extrabold text-xs text-amber-300 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/25">
+                <span className={`font-mono font-extrabold text-xs px-2 py-0.5 rounded-md border ${isDark ? 'text-amber-300 bg-amber-500/10 border-amber-500/25' : 'text-amber-800 bg-amber-100 border-amber-300'}`}>
                   ONLINE RLS
                 </span>
-                <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 font-mono">
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded border font-mono ${isDark ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' : 'text-emerald-800 bg-emerald-100 border-emerald-300'}`}>
                   -25.8% ERR
                 </span>
               </div>
-              <p className="text-[11px] font-semibold text-slate-200 mt-2">
+              <p className={`text-[11px] font-semibold mt-2 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
                 Gain 1.5x Sensor Drift Test
               </p>
-              <p className="text-[10px] text-slate-400 mt-0.5">
+              <p className={`text-[10px] mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                 Forgetting Factor &lambda; = 0.999862
               </p>
 
-              <div className="mt-3 pt-2.5 border-t border-white/5 grid grid-cols-2 gap-2 text-xs">
+              <div className={`mt-3 pt-2.5 border-t grid grid-cols-2 gap-2 text-xs ${isDark ? 'border-white/5' : 'border-slate-200'}`}>
                 <div>
-                  <span className="text-[10px] text-slate-400 block">Frozen Champion</span>
-                  <span className="font-mono font-bold text-base text-rose-400">3.793</span>
-                  <span className="text-[9px] text-slate-400 block">Drifted Holdout</span>
+                  <span className={`text-[10px] block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Frozen Champion</span>
+                  <span className={`font-mono font-bold text-base ${isDark ? 'text-rose-400' : 'text-rose-600'}`}>3.793</span>
+                  <span className={`text-[9px] block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Drifted Holdout</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block">Adaptive RLS</span>
-                  <span className="font-mono font-extrabold text-base text-emerald-400">2.816</span>
-                  <span className="text-[9px] text-emerald-300 block">Promoted Gate</span>
+                  <span className={`text-[10px] block ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Adaptive RLS</span>
+                  <span className={`font-mono font-extrabold text-base ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>2.816</span>
+                  <span className={`text-[9px] font-bold block ${isDark ? 'text-emerald-300' : 'text-emerald-700'}`}>Promoted Gate</span>
                 </div>
               </div>
             </div>
@@ -1793,14 +1835,14 @@ export default function PredictiveAnalytics() {
 
             {/* Regime Toggle Buttons */}
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-              <div className="inline-flex rounded-xl p-1 bg-slate-900/90 border border-white/10">
+              <div className={`inline-flex rounded-xl p-1 border ${isDark ? 'bg-slate-900/90 border-white/10' : 'bg-slate-100 border-slate-200'}`}>
                 <button
                   type="button"
                   onClick={() => handleRunRetrainGate('stationary')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                     retrainRegime === 'stationary'
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                      : 'text-slate-400 hover:text-white'
+                      ? (isDark ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-amber-100 text-amber-900 border border-amber-300 font-bold')
+                      : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900')
                   }`}
                 >
                   1. Stationary Holdout (No Drift)
@@ -1810,8 +1852,8 @@ export default function PredictiveAnalytics() {
                   onClick={() => handleRunRetrainGate('drift_gain_to_1_5')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                     retrainRegime === 'drift_gain_to_1_5'
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                      : 'text-slate-400 hover:text-white'
+                      ? (isDark ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold')
+                      : (isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900')
                   }`}
                 >
                   2. Sensor Gain Drift (1.5× Ramp)
@@ -1831,7 +1873,7 @@ export default function PredictiveAnalytics() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs font-sans">
                 <thead>
-                  <tr className="border-b border-white/10 text-[10px] uppercase tracking-wider text-slate-400">
+                  <tr className={`border-b text-[10px] uppercase tracking-wider ${isDark ? 'border-white/10 text-slate-400' : 'border-slate-200 text-slate-600 font-bold bg-slate-50'}`}>
                     <th className="py-2 pr-3">Holdout Scenario</th>
                     <th className="py-2 px-3">Frozen Champion RMSE</th>
                     <th className="py-2 px-3">RLS No-Forget (&lambda;=1.0)</th>
@@ -1839,36 +1881,36 @@ export default function PredictiveAnalytics() {
                     <th className="py-2 pl-3">Promotion Gate Verdict</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
-                  <tr className={retrainRegime === 'stationary' ? 'bg-amber-500/5' : ''}>
-                    <td className="py-2.5 pr-3 font-bold text-slate-200">
+                <tbody className={`divide-y ${isDark ? 'divide-white/5' : 'divide-slate-200'}`}>
+                  <tr className={retrainRegime === 'stationary' ? (isDark ? 'bg-amber-500/5' : 'bg-amber-50/70') : ''}>
+                    <td className={`py-2.5 pr-3 font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                       Stationary Holdout
-                      <span className="block text-[10px] font-normal text-slate-400">Units 81–100 (Last-cycle failure snapshot)</span>
+                      <span className={`block text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Units 81–100 (Last-cycle failure snapshot)</span>
                     </td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-emerald-400">
+                    <td className={`py-2.5 px-3 font-mono font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
                       0.234
-                      <span className="block text-[9px] font-sans text-slate-400">True RUL=0 snapshot</span>
+                      <span className={`block text-[9px] font-sans ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>True RUL=0 snapshot</span>
                     </td>
-                    <td className="py-2.5 px-3 font-mono text-slate-300">4.565</td>
-                    <td className="py-2.5 px-3 font-mono text-amber-300">4.747</td>
+                    <td className={`py-2.5 px-3 font-mono ${isDark ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>4.565</td>
+                    <td className={`py-2.5 px-3 font-mono ${isDark ? 'text-amber-300' : 'text-amber-700 font-bold'}`}>4.747</td>
                     <td className="py-2.5 pl-3">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${isDark ? 'bg-amber-500/15 text-amber-300 border-amber-500/30' : 'bg-amber-100 text-amber-800 border-amber-300'}`}>
                         REJECTED (false)
                       </span>
                     </td>
                   </tr>
-                  <tr className={retrainRegime === 'drift_gain_to_1_5' ? 'bg-emerald-500/5' : ''}>
-                    <td className="py-2.5 pr-3 font-bold text-slate-200">
+                  <tr className={retrainRegime === 'drift_gain_to_1_5' ? (isDark ? 'bg-emerald-500/5' : 'bg-emerald-50/70') : ''}>
+                    <td className={`py-2.5 pr-3 font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                       1.5× Sensor Gain Drift
-                      <span className="block text-[10px] font-normal text-slate-400">Units 41–80 ramp to 1.5× gain</span>
+                      <span className={`block text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Units 41–80 ramp to 1.5× gain</span>
                     </td>
-                    <td className="py-2.5 px-3 font-mono font-bold text-rose-400">3.793</td>
-                    <td className="py-2.5 px-3 font-mono text-slate-300">3.412</td>
-                    <td className="py-2.5 px-3 font-mono font-extrabold text-emerald-400">
+                    <td className={`py-2.5 px-3 font-mono font-bold ${isDark ? 'text-rose-400' : 'text-rose-700'}`}>3.793</td>
+                    <td className={`py-2.5 px-3 font-mono ${isDark ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>3.412</td>
+                    <td className={`py-2.5 px-3 font-mono font-extrabold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
                       2.816 (-25.8%)
                     </td>
                     <td className="py-2.5 pl-3">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${isDark ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' : 'bg-emerald-100 text-emerald-800 border-emerald-300'}`}>
                         PROMOTED (true)
                       </span>
                     </td>
@@ -1881,8 +1923,8 @@ export default function PredictiveAnalytics() {
           {/* Live Gate Execution Output Banner */}
           <div className={`mt-4 p-3.5 rounded-xl border text-xs ${
             (retrainLog ? retrainLog.promoted : retrainRegime === 'drift_gain_to_1_5')
-              ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200'
-              : 'bg-amber-950/30 border-amber-500/30 text-amber-200'
+              ? (isDark ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200' : 'bg-emerald-50 border-emerald-300 text-emerald-950 shadow-sm')
+              : (isDark ? 'bg-amber-950/30 border-amber-500/30 text-amber-200' : 'bg-amber-50 border-amber-300 text-amber-950 shadow-sm')
           }`}>
             <div className="flex items-center justify-between gap-2 font-bold mb-1">
               <span>
@@ -1892,11 +1934,11 @@ export default function PredictiveAnalytics() {
                   ? 'PROMOTION GATE PASSED (-25.8% Error) — Challenger Promoted'
                   : 'PROMOTION GATE REJECTED — Keep Frozen Champion (v2.4)'}
               </span>
-              <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-black/30">
+              <span className={`font-mono text-[10px] px-2 py-0.5 rounded ${isDark ? 'bg-black/30' : 'bg-white border border-slate-200 text-slate-700'}`}>
                 Rule: Challenger &lt; Champion RMSE
               </span>
             </div>
-            <p className="text-[11px] text-slate-300 leading-relaxed">
+            <p className={`text-[11px] leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>
               {retrainLog
                 ? `${retrainLog.aliasAction} (${retrainLog.championNote})`
                 : retrainRegime === 'drift_gain_to_1_5'
@@ -1933,11 +1975,11 @@ export default function PredictiveAnalytics() {
                 { step: '6. Human Approve', desc: 'Mandatory Engineering Officer sign-off when σ > P90 spread limit or before any rule change is released.' },
                 { step: '7. Release', desc: 'Moves MLflow champion rule alias with one-click rollback.' }
               ].map((item) => (
-                <div key={item.step} className="p-2 rounded-xl bg-slate-900/75 border border-white/5 flex items-start gap-2.5">
-                  <span className="font-mono font-bold text-[10px] text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20 shrink-0 mt-0.5">
+                <div key={item.step} className={`p-2 rounded-xl border flex items-start gap-2.5 ${isDark ? 'bg-slate-900/75 border-white/5' : 'bg-slate-50 border-slate-200 shadow-sm'}`}>
+                  <span className={`font-mono font-bold text-[10px] px-2 py-0.5 rounded border shrink-0 mt-0.5 ${isDark ? 'text-sky-400 bg-sky-500/10 border-sky-500/20' : 'text-sky-800 bg-sky-100 border-sky-300'}`}>
                     {item.step}
                   </span>
-                  <span className="text-[11px] text-slate-300 leading-snug">{item.desc}</span>
+                  <span className={`text-[11px] leading-snug ${isDark ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>{item.desc}</span>
                 </div>
               ))}
             </div>
@@ -1970,19 +2012,19 @@ export default function PredictiveAnalytics() {
             { id: 'D3 → F3 (Step 5)', title: 'Piecewise RUL Cap (125) & 30-Cyc Slopes', finding: 'Wear begins at 47–55% life (39–49% rows > 125 RUL); final 50 cycles degrade 2.9× faster.', action: 'Cap training target RUL at 125 and compute 30-cycle mean, std, min, max, and linear slopes.' },
             { id: 'D5 → F5 (Step 6)', title: 'Dual Fault Mode PCA Separation', finding: 'FD003 (life 305 vs 202) and FD004 (294 vs 213) mix HPC and Fan degradation modes.', action: 'Project normalized sensors onto top 3 training PCA axes so LightGBM separates both fault modes.' }
           ].map((f) => (
-            <div key={f.id} className="p-3.5 rounded-xl bg-slate-900/80 border border-white/5 flex flex-col justify-between">
+            <div key={f.id} className={`p-3.5 rounded-xl border flex flex-col justify-between ${isDark ? 'bg-slate-900/80 border-white/5' : 'bg-slate-50 border-slate-200 shadow-sm'}`}>
               <div>
                 <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <span className="font-mono font-bold text-[10px] text-sky-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                  <span className={`font-mono font-bold text-[10px] px-2 py-0.5 rounded border ${isDark ? 'text-sky-400 bg-blue-500/10 border-blue-500/20' : 'text-sky-800 bg-sky-100 border-sky-300'}`}>
                     {f.id}
                   </span>
-                  <span className="font-bold text-slate-200 text-xs">{f.title}</span>
+                  <span className={`font-bold text-xs ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{f.title}</span>
                 </div>
-                <p className="text-[11px] text-slate-400 mb-1.5">
-                  <strong className="text-slate-300">Finding:</strong> {f.finding}
+                <p className={`text-[11px] mb-1.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <strong className={isDark ? 'text-slate-300' : 'text-slate-700'}>Finding:</strong> {f.finding}
                 </p>
-                <p className="text-[11px] text-emerald-300/90">
-                  <strong className="text-emerald-400">Action:</strong> {f.action}
+                <p className={`text-[11px] ${isDark ? 'text-emerald-300/90' : 'text-emerald-800 font-medium'}`}>
+                  <strong className={isDark ? 'text-emerald-400' : 'text-emerald-700'}>Action:</strong> {f.action}
                 </p>
               </div>
             </div>
