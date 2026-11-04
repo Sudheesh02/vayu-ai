@@ -84,9 +84,9 @@ function MainLayout() {
         </main>
 
         {/* Tactical Aerospace Footer */}
-        <footer className="px-6 py-3.5 text-center text-xs font-sans border-t border-white/5 text-slate-400">
-          <p className="text-xs text-slate-400 font-medium">
-            SIH 2026 (SIH26249) &bull; Team <span className="font-semibold text-slate-200">BioXtreme</span> &bull; Ministry of Defence & Indian Air Force
+        <footer className={`px-6 py-3.5 text-center text-xs font-sans border-t ${isDark ? 'border-white/5 text-slate-400' : 'border-slate-200 text-slate-600'}`}>
+          <p className={`text-xs font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            SIH 2026 (SIH26249) &bull; Team <span className={`font-semibold ${isDark ? 'text-slate-200' : 'text-slate-900 font-bold'}`}>BioXtreme</span> &bull; Ministry of Defence & Indian Air Force
           </p>
         </footer>
       </div>

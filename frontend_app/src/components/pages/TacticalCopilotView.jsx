@@ -337,7 +337,9 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-blue-500/10 text-sky-400 font-semibold border border-blue-500/20">
+              <span className={`text-[11px] font-sans px-2.5 py-0.5 rounded-full font-semibold border ${
+                isDark ? 'bg-blue-500/10 text-sky-400 border-blue-500/20' : 'bg-blue-50 text-blue-800 border-blue-300 font-bold'
+              }`}>
                 Sarvam AI bulbul:v3 Voice Link
               </span>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" title="Voice Channel Active" />
@@ -359,7 +361,9 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
                 viewMode === 'orb'
                   ? 'bg-blue-700 text-white border border-blue-500/30 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  : isDark
+                  ? 'text-slate-400 hover:text-white'
+                  : 'text-slate-700 hover:text-slate-900 font-semibold'
               }`}
             >
               <Headphones className="w-3.5 h-3.5" />
@@ -370,7 +374,9 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
                 viewMode === 'chat'
                   ? 'bg-blue-700 text-white border border-blue-500/30 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  : isDark
+                  ? 'text-slate-400 hover:text-white'
+                  : 'text-slate-700 hover:text-slate-900 font-semibold'
               }`}
             >
               <MessageSquare className="w-3.5 h-3.5" />
@@ -404,10 +410,12 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
             title="When active, the assistant automatically listens for your reply after speaking (hands-free like ChatGPT / Gemini)"
             className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-semibold transition ${
               isContinuousLive
-                ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-sm'
+                ? isDark
+                  ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-sm'
+                  : 'bg-emerald-100 border-emerald-300 text-emerald-900 font-bold shadow-2xs'
                 : isDark
                 ? 'bg-slate-900 border-white/10 text-slate-400 hover:text-white'
-                : 'bg-slate-100 border-slate-200 text-slate-600'
+                : 'bg-slate-100 border-slate-300 text-slate-700 hover:text-slate-900 font-medium'
             }`}
           >
             <span className={`w-2 h-2 rounded-full ${isContinuousLive ? 'bg-emerald-400 animate-ping' : 'bg-slate-500'}`} />
@@ -420,7 +428,7 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
             className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-semibold transition ${
               isDark
                 ? 'border-white/10 hover:bg-white/10 text-slate-300 hover:text-white'
-                : 'border-slate-200 hover:bg-slate-100 text-slate-700'
+                : 'border-slate-300 hover:bg-slate-100 text-slate-800 font-medium'
             }`}
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -446,7 +454,8 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
 
             {/* Top Status Banner */}
             <div className="z-10 text-center">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 border border-white/10 text-xs text-slate-300 backdrop-blur-md">
+              <div className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs backdrop-blur-md shadow-2xs ${isDark ? "bg-slate-900/80 border-white/10 text-slate-300" : "bg-slate-100 border-slate-300 text-slate-800 font-bold"}`}>
+
                 <span className={`w-2 h-2 rounded-full ${
                   isListening
                     ? 'bg-red-500 animate-ping'
@@ -510,8 +519,8 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
                     </>
                   ) : (
                     <>
-                      <Mic className="w-10 h-10 text-slate-400 group-hover:scale-110 transition" />
-                      <span className="text-[11px] font-bold text-slate-300 tracking-wider uppercase mt-2">
+                      <Mic className={`w-10 h-10 group-hover:scale-110 transition ${isDark ? "text-slate-400" : "text-blue-700"}`} />
+                      <span className={`text-[11px] font-bold tracking-wider uppercase mt-2 ${isDark ? "text-slate-300" : "text-slate-900 font-black"}`}>
                         Tap to Talk
                       </span>
                     </>
@@ -533,7 +542,7 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
                         ? 'bg-red-400 animate-bounce'
                         : isPlayingAudio
                         ? 'bg-blue-500 animate-bounce'
-                        : 'bg-slate-700'
+                        : (isDark ? 'bg-slate-700' : 'bg-slate-300')
                     }`}
                   />
                 ))}
@@ -543,15 +552,17 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
             {/* Bottom Live Speech Readout */}
             <div className="z-10 w-full max-w-xl text-center px-4">
               {liveTranscript ? (
-                <div className="p-3 rounded-xl bg-slate-900/90 border border-cyan-500/30 text-white font-sans text-sm animate-fadeIn">
-                  <span className="text-cyan-400 font-bold uppercase text-[10px] block mb-0.5">You said:</span>
+                <div className={`p-3.5 rounded-xl border font-sans text-sm animate-fadeIn ${
+                  isDark ? 'bg-slate-900/90 border-cyan-500/30 text-white' : 'bg-blue-50 border-blue-200 text-slate-900 shadow-sm'
+                }`}>
+                  <span className={`font-bold uppercase text-[10px] block mb-0.5 ${isDark ? 'text-cyan-400' : 'text-blue-700 font-bold'}`}>You said:</span>
                   "{liveTranscript}"
                 </div>
               ) : (
-                <div className={`p-3 rounded-xl border text-xs font-sans leading-relaxed ${
-                  isDark ? 'bg-slate-900/70 border-white/5 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-800'
+                <div className={`p-3.5 rounded-xl border text-xs font-sans leading-relaxed ${
+                  isDark ? 'bg-slate-900/70 border-white/5 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-800 shadow-2xs'
                 }`}>
-                  <span className={`font-bold uppercase text-[10px] block mb-0.5 ${isDark ? 'text-cyan-400' : 'text-blue-700'}`}>Last Briefing Transmitted:</span>
+                  <span className={`font-bold uppercase text-[10px] block mb-0.5 ${isDark ? 'text-cyan-400' : 'text-blue-700 font-bold'}`}>Last Briefing Transmitted:</span>
                   "{lastAgentSpoken.slice(0, 180)}..."
                 </div>
               )}
@@ -576,11 +587,11 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
                     className={`w-full text-left p-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-between group ${
                       isDark
                         ? 'bg-slate-900/70 hover:bg-cyan-500/10 border-white/5 hover:border-cyan-500/30 text-slate-300 hover:text-white'
-                        : 'bg-slate-50 hover:bg-blue-50 border-slate-200 hover:border-blue-300 text-slate-700 hover:text-blue-800'
+                        : 'bg-slate-50 hover:bg-blue-50 border-slate-200 hover:border-blue-300 text-slate-800 font-medium hover:text-blue-900 shadow-2xs'
                     }`}
                   >
                     <span>{qp.label}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 transition" />
+                    <ArrowRight className={`w-3.5 h-3.5 ${isDark ? "text-slate-500 group-hover:text-cyan-400" : "text-slate-400 group-hover:text-blue-600"} group-hover:translate-x-0.5 transition`} />
                   </button>
                 ))}
               </div>
@@ -588,12 +599,12 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
 
             <GlassCard className="p-4 flex items-center justify-between text-xs font-sans">
               <div>
-                <p className={`font-bold ${isDark ? "text-slate-300" : "text-slate-800"}`}>Continuous Hands Free Mode</p>
+                <p className={`font-bold ${isDark ? "text-slate-300" : "text-slate-900 font-bold"}`}>Continuous Hands Free Mode</p>
                 <p className={`text-[11px] mt-0.5 ${isDark ? "text-slate-500" : "text-slate-600 font-medium"}`}>Talk freely without pressing mic each time</p>
               </div>
               <button
                 onClick={() => setIsContinuousLive(!isContinuousLive)}
-                className={`w-11 h-6 rounded-full transition-colors p-1 ${isContinuousLive ? 'bg-cyan-500' : 'bg-slate-700'}`}
+                className={`w-11 h-6 rounded-full transition-colors p-1 ${isContinuousLive ? 'bg-cyan-500' : (isDark ? 'bg-slate-700' : 'bg-slate-300')}`}
               >
                 <div className={`w-4 h-4 rounded-full bg-white transition-transform ${isContinuousLive ? 'translate-x-5' : 'translate-x-0'}`} />
               </button>
