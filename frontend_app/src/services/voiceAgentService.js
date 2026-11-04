@@ -3,7 +3,7 @@
 
 const SARVAM_TTS_URL = 'https://api.sarvam.ai/text-to-speech';
 const DEFAULT_SPEAKER = 'shubh';
-const DEFAULT_SARVAM_KEY = import.meta.env.VITE_SARVAM_API_KEY || 'sk_juwntjqd_5YbJNbqu4Bs1YIuz474ftfh3';
+const DEFAULT_SARVAM_KEY = import.meta.env.VITE_SARVAM_API_KEY || '';
 // Memory audio cache to ensure instant playback without redundant network roundtrips
 const audioCache = new Map();
 
