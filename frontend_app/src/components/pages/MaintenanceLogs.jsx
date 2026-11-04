@@ -324,7 +324,7 @@ export default function MaintenanceLogs() {
                                   <Plane className="w-3 h-3 text-sky-400 shrink-0" />
                                   Tail {wo.tail_no}
                                 </span>
-                                <span className="text-[11px] text-slate-300 font-medium truncate">
+                                <span className={`text-[11px] font-medium truncate ${isDark ? "text-slate-300" : "text-slate-800"}`}>
                                   {wo.aircraft_type || 'IAF Combat Jet'}
                                 </span>
                               </div>
@@ -335,7 +335,7 @@ export default function MaintenanceLogs() {
                                   isCritical ? 'bg-rose-500' : isAdvisory ? 'bg-amber-400' : 'bg-slate-400'
                                 }`} />
                                 <span className={`text-[10px] font-mono font-semibold uppercase tracking-wider ${
-                                  isCritical ? 'text-rose-300' : isAdvisory ? 'text-slate-300' : 'text-slate-400'
+                                  isCritical ? (isDark ? 'text-rose-300' : 'text-rose-700 font-bold') : isAdvisory ? (isDark ? 'text-slate-300' : 'text-slate-800 font-bold') : (isDark ? 'text-slate-400' : 'text-slate-600')
                                 }`}>
                                   {isCritical ? 'Critical' : isAdvisory ? 'Advisory' : 'Routine'}
                                 </span>
@@ -393,7 +393,7 @@ export default function MaintenanceLogs() {
                                   <div className="flex items-center justify-between text-[10px] px-2 py-1 rounded bg-slate-800/80 border border-slate-700/70 text-slate-300">
                                     <span className="flex items-center gap-1.5 min-w-0">
                                       <Link2 className="w-3 h-3 text-slate-400 shrink-0" />
-                                      <span className="truncate font-semibold font-mono text-slate-200">{wo.linked_requisition}</span>
+                                      <span className={`truncate font-semibold font-mono ${isDark ? "text-slate-200" : "text-slate-900"}`}>{wo.linked_requisition}</span>
                                     </span>
                                     <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider shrink-0 pl-1">Depot Requisition</span>
                                   </div>
@@ -429,7 +429,7 @@ export default function MaintenanceLogs() {
                             {/* Card Footer Actions */}
                             <div className="mt-2.5 pt-2 border-t border-slate-800 flex items-center justify-between gap-2 text-xs font-sans">
                               <span className="text-[10px] font-mono text-slate-400 truncate">
-                                STAGE: <strong className="text-slate-300 font-semibold">{col.title}</strong>
+                                STAGE: <strong className={`font-semibold ${isDark ? "text-slate-300" : "text-slate-900"}`}>{col.title}</strong>
                               </span>
 
                               {col.nextStatus ? (
@@ -601,10 +601,12 @@ export default function MaintenanceLogs() {
                       <td className={`p-3 font-sans font-bold text-xs ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {log.tail_no}
                       </td>
-                      <td className="p-3 font-sans text-xs text-slate-300">
+                      <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-300" : "text-slate-800"}`}>
+                          
                         {log.mission_type}
                       </td>
-                      <td className="p-3 font-sans text-xs text-slate-300">
+                      <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-300" : "text-slate-800"}`}>
+                          
                         {log.duration_hours} hrs
                       </td>
                       <td className="p-3 font-sans font-semibold text-cyan-200 text-xs">

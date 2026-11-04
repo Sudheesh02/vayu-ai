@@ -554,7 +554,7 @@ export default function CommandOverview() {
                     <td className="p-3">
                       <div className="flex items-center gap-2">
                         <span className={`font-sans font-bold text-xs ${
-                          ac.health_score > 75 ? 'text-emerald-400' : (ac.health_score > 50 ? 'text-amber-400' : 'text-rose-400')
+                          ac.health_score > 75 ? (isDark ? 'text-emerald-400' : 'text-emerald-700') : (ac.health_score > 50 ? (isDark ? 'text-amber-400' : 'text-amber-700') : (isDark ? 'text-rose-400' : 'text-rose-700'))
                         }`}>
                           {ac.health_score}%
                         </span>

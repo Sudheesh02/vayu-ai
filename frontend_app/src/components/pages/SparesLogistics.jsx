@@ -334,11 +334,12 @@ export default function SparesLogistics() {
 
                 <div className="pt-2 border-t border-white/5 dark:border-white/5 flex items-center justify-between font-sans">
                   <span className="text-[11px] text-slate-400">
-                    Action: <strong className="text-slate-300">{trig.recommended_action}</strong>
+                    Action: <strong className={isDark ? "text-slate-300" : "text-slate-900"}>{trig.recommended_action}</strong>
                   </span>
 
                   {isApproved ? (
-                    <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                    <span className={`text-xs font-bold flex items-center gap-1 ${isDark ? "text-emerald-400" : "text-emerald-700"}`}>
+                    
                       <CheckCircle className="w-3.5 h-3.5" /> Dispatched
                     </span>
                   ) : (
@@ -397,7 +398,8 @@ export default function SparesLogistics() {
                   {dp.component_name}
                 </h4>
 
-                <div className="mt-2.5 text-xs font-sans space-y-1.5 text-slate-300">
+                <div className={`mt-2.5 text-xs font-sans space-y-1.5 ${isDark ? "text-slate-300" : "text-slate-800"}`}>
+                  
                   <div className="flex justify-between items-center">
                     <span className="text-slate-400">Target Airframe:</span>
                     <strong className={isDark ? 'text-white' : 'text-slate-900'}>{dp.tail_no} &bull; {dp.base_station}</strong>
@@ -408,7 +410,7 @@ export default function SparesLogistics() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-slate-400">Transit Mode:</span>
-                    <span className="text-slate-300">{dp.transit_mode || 'Air Transport Scramble'}</span>
+                    <span className={isDark ? "text-slate-300" : "text-slate-800 font-bold"}>{dp.transit_mode || 'Air Transport Scramble'}</span>
                   </div>
                 </div>
 
@@ -556,14 +558,15 @@ export default function SparesLogistics() {
                     <td className="p-3 font-sans">
                       <div className="flex items-center gap-1.5">
                         <span className={`font-black text-sm tracking-tight ${
-                          isOutOfStock ? 'text-rose-400' : isBelowSafety ? 'text-amber-200' : 'text-emerald-400'
+                          isOutOfStock ? (isDark ? 'text-rose-400' : 'text-rose-700') : isBelowSafety ? (isDark ? 'text-amber-200' : 'text-amber-800 font-bold') : (isDark ? 'text-emerald-400' : 'text-emerald-700 font-bold')
                         }`}>
                           {sp.quantity_on_hand}
                         </span>
                         <span className="text-[11px] font-medium text-slate-400">units</span>
                       </div>
                     </td>
-                    <td className="p-3 font-sans text-xs text-slate-400">
+                    <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-400" : "text-slate-700 font-medium"}`}>
+                          
                       Min. {sp.safety_stock_threshold} units
                     </td>
                     <td className={`p-3 font-sans font-semibold text-xs ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
