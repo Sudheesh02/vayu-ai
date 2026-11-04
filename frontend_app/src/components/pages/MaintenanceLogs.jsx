@@ -290,9 +290,10 @@ export default function MaintenanceLogs() {
                       </h4>
                     </div>
                     <span className={`px-2 py-0.5 rounded-full font-mono text-[11px] font-bold border ${
-                      col.id === 'DISPATCHED' ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' :
-                      col.id === 'IN_PROGRESS' ? 'bg-amber-500/10 text-amber-300 border-amber-500/20' :
-                      col.id === 'AWAITING_SPARES' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20'
+                      col.id === 'DISPATCHED' ? (isDark ? 'bg-sky-500/10 text-sky-400 border-sky-500/20' : 'bg-blue-100 text-blue-800 border-blue-300 font-bold') :
+                      col.id === 'IN_PROGRESS' ? (isDark ? 'bg-amber-500/10 text-amber-300 border-amber-500/20' : 'bg-amber-100 text-amber-900 border-amber-300 font-bold') :
+                      col.id === 'AWAITING_SPARES' ? (isDark ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 'bg-rose-100 text-rose-800 border-rose-300 font-bold') :
+                      (isDark ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20' : 'bg-emerald-100 text-emerald-900 border-emerald-300 font-bold')
                     }`}>
                       {columnOrders.length}
                     </span>
@@ -321,11 +322,13 @@ export default function MaintenanceLogs() {
                             <div className={`flex items-center justify-between gap-2 pb-2 border-b ${isDark ? "border-slate-800" : "border-slate-200"}`}>
 
                               <div className="flex items-center gap-1.5 min-w-0">
-                                <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-blue-600/15 text-sky-400 border border-blue-500/30 whitespace-nowrap shrink-0 flex items-center gap-1">
-                                  <Plane className="w-3 h-3 text-sky-400 shrink-0" />
+                                <span className={`font-mono text-[11px] font-bold px-2 py-0.5 rounded border whitespace-nowrap shrink-0 flex items-center gap-1 ${
+                                  isDark ? 'bg-blue-600/15 text-sky-400 border-blue-500/30' : 'bg-blue-50 text-blue-800 border-blue-300 font-bold'
+                                }`}>
+                                  <Plane className={`w-3 h-3 shrink-0 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
                                   Tail {wo.tail_no}
                                 </span>
-                                <span className={`text-[11px] font-medium truncate ${isDark ? "text-slate-300" : "text-slate-800"}`}>
+                                <span className={`text-[11px] font-medium truncate ${isDark ? "text-slate-300" : "text-slate-700 font-semibold"}`}>
                                   {wo.aircraft_type || 'IAF Combat Jet'}
                                 </span>
                               </div>
@@ -336,7 +339,7 @@ export default function MaintenanceLogs() {
                                   isCritical ? 'bg-rose-500' : isAdvisory ? 'bg-amber-400' : 'bg-slate-400'
                                 }`} />
                                 <span className={`text-[10px] font-mono font-semibold uppercase tracking-wider ${
-                                  isCritical ? (isDark ? 'text-rose-300' : 'text-rose-700 font-bold') : isAdvisory ? (isDark ? 'text-slate-300' : 'text-slate-800 font-bold') : (isDark ? 'text-slate-400' : 'text-slate-600')
+                                  isCritical ? (isDark ? 'text-rose-300' : 'text-rose-700 font-bold') : isAdvisory ? (isDark ? 'text-amber-300' : 'text-amber-800 font-bold') : (isDark ? 'text-slate-400' : 'text-slate-600 font-medium')
                                 }`}>
                                   {isCritical ? 'Critical' : isAdvisory ? 'Advisory' : 'Routine'}
                                 </span>
@@ -344,39 +347,41 @@ export default function MaintenanceLogs() {
                             </div>
 
                             {/* Order ID & Air Base (Un-truncated, clean monospace) */}
-                            <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2 font-mono">
-                              <span className="truncate text-slate-400">
-                                <span className="text-slate-500">WO:</span> <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>{wo.order_id}</span>
+                            <div className={`flex items-center justify-between text-[11px] mt-2 font-mono ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>
+                              <span className="truncate">
+                                <span className={isDark ? "text-slate-500" : "text-slate-500 font-semibold"}>WO:</span> <span className={`font-bold ${isDark ? "text-slate-200" : "text-slate-900"}`}>{wo.order_id}</span>
                               </span>
-                              <span className="text-slate-400 text-[10px] whitespace-nowrap shrink-0 pl-1 flex items-center gap-1">
-                                <MapPin className="w-3 h-3 text-slate-500 shrink-0" />
+                              <span className={`text-[10px] whitespace-nowrap shrink-0 pl-1 flex items-center gap-1 ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>
+                                <MapPin className={`w-3 h-3 shrink-0 ${isDark ? "text-slate-500" : "text-blue-600"}`} />
                                 <span>{wo.base_station || 'Forward Base'}</span>
                               </span>
                             </div>
 
                             {/* Subsystem & Action Directive */}
                             <div className="mt-2.5">
-                              <div className="flex items-center gap-1.5 text-xs font-bold text-sky-400">
-                                <Cpu className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                              <div className={`flex items-center gap-1.5 text-xs font-bold ${isDark ? "text-sky-400" : "text-blue-700 font-bold"}`}>
+                                <Cpu className={`w-3.5 h-3.5 shrink-0 ${isDark ? "text-sky-400" : "text-blue-700"}`} />
                                 <span className="truncate">{wo.fault_subsystem}</span>
                               </div>
-                              <p className={`text-xs mt-1 leading-relaxed font-sans ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              <p className={`text-xs mt-1 leading-relaxed font-sans ${isDark ? 'text-slate-200' : 'text-slate-800 font-medium'}`}>
                                 {wo.action_required}
                               </p>
                             </div>
 
                             {/* Telemetry RUL Block - Clean Slate, Crisp Contrast (No Piercing Yellow) */}
-                            <div className={`mt-2.5 p-2 rounded-lg ${isDark ? "bg-slate-800/60 border-slate-700/60" : "bg-slate-50 border-slate-200"} grid grid-cols-2 gap-2 text-[11px]`}>
+                            <div className={`mt-2.5 p-2 rounded-lg grid grid-cols-2 gap-2 text-[11px] border ${
+                              isDark ? 'bg-slate-800/60 border-slate-700/60' : 'bg-slate-50 border-slate-200 shadow-2xs'
+                            }`}>
                               <div>
-                                <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Predicted RUL</div>
-                                <div className="text-xs font-bold text-sky-400 font-mono mt-0.5">
-                                  {wo.predicted_rul} <span className="text-[10px] text-slate-400 font-normal">hrs</span>
+                                <div className={`text-[10px] uppercase tracking-wider font-semibold ${isDark ? "text-slate-400" : "text-slate-600 font-bold"}`}>Predicted RUL</div>
+                                <div className={`text-xs font-bold font-mono mt-0.5 ${isDark ? "text-sky-400" : "text-blue-700 font-black"}`}>
+                                  {wo.predicted_rul} <span className={`text-[10px] font-normal ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>hrs</span>
                                 </div>
                               </div>
-                              <div className="border-l border-slate-700/60 pl-2">
-                                <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Safe Margin (95% CI)</div>
-                                <div className="text-xs font-bold text-slate-100 font-mono mt-0.5">
-                                  {wo.lower_bound_rul} <span className="text-[10px] text-slate-400 font-normal">hrs</span>
+                              <div className={`border-l pl-2 ${isDark ? "border-slate-700/60" : "border-slate-200"}`}>
+                                <div className={`text-[10px] uppercase tracking-wider font-semibold ${isDark ? "text-slate-400" : "text-slate-600 font-bold"}`}>Safe Margin (95% CI)</div>
+                                <div className={`text-xs font-bold font-mono mt-0.5 ${isDark ? "text-slate-100" : "text-slate-900 font-black"}`}>
+                                  {wo.lower_bound_rul} <span className={`text-[10px] font-normal ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>hrs</span>
                                 </div>
                               </div>
                             </div>
@@ -385,18 +390,22 @@ export default function MaintenanceLogs() {
                             {(wo.required_tooling || wo.linked_requisition) && (
                               <div className="mt-2 space-y-1 font-sans">
                                 {wo.required_tooling && (
-                                  <div className="flex items-center gap-1.5 text-[10px] px-2 py-1 rounded bg-slate-800/50 border border-slate-700/50 text-slate-300">
-                                    <Wrench className="w-3 h-3 text-sky-400 shrink-0" />
+                                  <div className={`flex items-center gap-1.5 text-[10px] px-2 py-1 rounded border font-sans ${
+                                    isDark ? 'bg-slate-800/50 border-slate-700/50 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-800 font-semibold'
+                                  }`}>
+                                    <Wrench className={`w-3 h-3 shrink-0 ${isDark ? 'text-sky-400' : 'text-blue-600'}`} />
                                     <span className="truncate">{wo.required_tooling}</span>
                                   </div>
                                 )}
                                 {wo.linked_requisition && (
-                                  <div className="flex items-center justify-between text-[10px] px-2 py-1 rounded bg-slate-800/80 border border-slate-700/70 text-slate-300">
+                                  <div className={`flex items-center justify-between text-[10px] px-2 py-1 rounded border font-sans ${
+                                    isDark ? 'bg-slate-800/80 border-slate-700/70 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-800 font-semibold'
+                                  }`}>
                                     <span className="flex items-center gap-1.5 min-w-0">
-                                      <Link2 className="w-3 h-3 text-slate-400 shrink-0" />
-                                      <span className={`truncate font-semibold font-mono ${isDark ? "text-slate-200" : "text-slate-900"}`}>{wo.linked_requisition}</span>
+                                      <Link2 className={`w-3 h-3 shrink-0 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
+                                      <span className={`truncate font-semibold font-mono ${isDark ? "text-slate-200" : "text-blue-700"}`}>{wo.linked_requisition}</span>
                                     </span>
-                                    <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider shrink-0 pl-1">Depot Requisition</span>
+                                    <span className={`text-[9px] font-mono uppercase tracking-wider shrink-0 pl-1 ${isDark ? "text-slate-400" : "text-slate-600 font-bold"}`}>Depot Requisition</span>
                                   </div>
                                 )}
                               </div>
@@ -404,26 +413,30 @@ export default function MaintenanceLogs() {
 
                             {/* Technician / Bay Assignment (Clean, unclipped layout) */}
                             <div className={`mt-2 p-2 rounded-lg text-xs font-sans border flex items-center justify-between gap-2 ${
-                              isDark ? 'bg-slate-800/50 border-slate-700/50 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700'
+                              isDark ? 'bg-slate-800/50 border-slate-700/50 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-800'
                             }`}>
                               <div className="flex items-center gap-2 min-w-0">
-                                <div className="w-6 h-6 rounded bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-sky-400 shrink-0">
+                                <div className={`w-6 h-6 rounded flex items-center justify-center shrink-0 border ${
+                                  isDark ? 'bg-blue-600/20 border-blue-500/30 text-sky-400' : 'bg-blue-100 border-blue-300 text-blue-800'
+                                }`}>
                                   <UserCheck className="w-3 h-3" />
                                 </div>
                                 <div className="min-w-0">
-                                  <div className={`text-[11px] font-bold truncate ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-
+                                  <div className={`text-[11px] font-bold truncate ${isDark ? "text-slate-100" : "text-slate-900 font-bold"}`}>
                                     {wo.technician || 'Unassigned Crew'}
                                   </div>
-                                  <div className={`text-[10px] truncate ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-
+                                  <div className={`text-[10px] truncate ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>
                                     {wo.hangar_bay || 'Awaiting Bay Allocation'}
                                   </div>
                                 </div>
                               </div>
                               <button
                                 onClick={() => setAssignModalOrder(wo)}
-                                className={`text-[10px] font-bold px-2 py-1 rounded transition shrink-0 ${isDark ? "bg-slate-700 hover:bg-slate-600 text-slate-200" : "bg-slate-200 hover:bg-slate-300 text-slate-800"}`}
+                                className={`text-[10px] font-bold px-2.5 py-1 rounded transition shrink-0 border ${
+                                  isDark
+                                    ? 'bg-slate-700 hover:bg-slate-600 text-slate-200 border-slate-600'
+                                    : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300 shadow-2xs font-bold'
+                                }`}
                               >
                                 {wo.technician ? 'Reassign' : 'Assign'}
                               </button>
@@ -432,7 +445,7 @@ export default function MaintenanceLogs() {
                             {/* Card Footer Actions */}
                             <div className={`mt-2.5 pt-2 border-t flex items-center justify-between gap-2 text-xs font-sans ${isDark ? "border-slate-800" : "border-slate-200"}`}>
 
-                              <span className="text-[10px] font-mono text-slate-400 truncate">
+                              <span className={`text-[10px] font-mono truncate ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>
                                 STAGE: <strong className={`font-semibold ${isDark ? "text-slate-300" : "text-slate-900"}`}>{col.title}</strong>
                               </span>
 
@@ -467,7 +480,7 @@ export default function MaintenanceLogs() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className={`text-[11px] font-semibold tracking-wider uppercase border-b font-sans ${
-                isDark ? 'text-slate-400 bg-slate-900/60 border-white/10' : 'text-slate-500 bg-slate-100 border-slate-200'
+                isDark ? 'text-slate-400 bg-slate-900/60 border-white/10' : 'text-slate-700 bg-slate-100 border-slate-200 font-bold'
               }`}>
                 <tr>
                   <th className="p-3">Order ID</th>
@@ -483,14 +496,14 @@ export default function MaintenanceLogs() {
               <tbody className="divide-y divide-white/5 dark:divide-white/5 font-medium">
                 {filteredOrders.map((wo) => (
                   <tr key={wo.order_id} className={isDark ? 'hover:bg-white/5' : 'hover:bg-slate-50'}>
-                    <td className="p-3 font-sans font-bold text-sky-400 text-xs tracking-tight">
+                    <td className={`p-3 font-sans font-bold text-xs tracking-tight ${isDark ? "text-sky-400" : "text-blue-700"}`}>
                       {wo.order_id}
                     </td>
                     <td className={`p-3 font-sans font-bold text-xs ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {wo.tail_no}
                     </td>
                     <td className="p-3">
-                      <span className="px-2.5 py-0.5 rounded-lg bg-white/5 border border-white/10 font-sans text-[11px] font-medium text-slate-300">
+                      <span className={`px-2.5 py-0.5 rounded-lg font-sans text-[11px] font-medium border ${isDark ? "bg-white/5 border-white/10 text-slate-300" : "bg-slate-100 border-slate-300 text-slate-800 font-semibold"}`}>
                         {wo.fault_subsystem}
                       </span>
                     </td>
@@ -499,12 +512,12 @@ export default function MaintenanceLogs() {
                     </td>
                     <td className="p-3 font-sans text-xs">
                       {wo.spares_allocated ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${isDark ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/20" : "bg-emerald-100 text-emerald-800 border-emerald-300 font-bold"}`}>
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                           Allocated
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-200/90 border border-amber-500/20">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${isDark ? "bg-amber-500/10 text-amber-200/90 border-amber-500/20" : "bg-amber-100 text-amber-900 border-amber-300 font-bold"}`}>
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                           Awaiting Depot
                         </span>
@@ -513,8 +526,8 @@ export default function MaintenanceLogs() {
                     <td className="p-3 text-[11px] font-sans">
                       {wo.technician ? (
                         <div>
-                          <p className="text-sky-400 font-semibold">{wo.technician}</p>
-                          <span className="text-slate-400 text-[10px]">{wo.hangar_bay}</span>
+                          <p className={`font-semibold ${isDark ? "text-sky-400" : "text-blue-700 font-bold"}`}>{wo.technician}</p>
+                          <span className={`text-[10px] ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>{wo.hangar_bay}</span>
                         </div>
                       ) : (
                         <span className="text-slate-500 italic">Unassigned</span>
@@ -526,7 +539,7 @@ export default function MaintenanceLogs() {
                     <td className="p-3 text-right">
                       <button
                         onClick={() => setAssignModalOrder(wo)}
-                        className="px-2.5 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-700 text-sky-300 hover:text-white border border-blue-500/40 text-[11px] font-sans font-semibold transition"
+                        className={`px-2.5 py-1 rounded-lg border text-[11px] font-sans font-semibold transition ${isDark ? "bg-blue-600/20 hover:bg-blue-700 text-sky-300 hover:text-white border-blue-500/40" : "bg-blue-50 hover:bg-blue-600 text-blue-800 hover:text-white border-blue-300 font-bold"}`}
                       >
                         Assign
                       </button>
@@ -571,7 +584,7 @@ export default function MaintenanceLogs() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className={`text-[11px] font-semibold tracking-wider uppercase border-b font-sans ${
-              isDark ? 'text-slate-400 bg-slate-900/60 border-white/10' : 'text-slate-500 bg-slate-100 border-slate-200'
+              isDark ? 'text-slate-400 bg-slate-900/60 border-white/10' : 'text-slate-700 bg-slate-100 border-slate-200 font-bold'
             }`}>
               <tr>
                 <th className="p-3">Log Reference</th>
@@ -599,26 +612,26 @@ export default function MaintenanceLogs() {
                           : 'hover:bg-slate-50'
                       }`}
                     >
-                      <td className="p-3 font-sans font-bold text-cyan-300 text-xs tracking-tight">
+                      <td className={`p-3 font-sans font-bold text-xs tracking-tight ${isDark ? "text-cyan-300" : "text-blue-700 font-bold"}`}>
                         {log.log_id}
                       </td>
                       <td className={`p-3 font-sans font-bold text-xs ${isDark ? 'text-white' : 'text-slate-900'}`}>
                         {log.tail_no}
                       </td>
-                      <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-300" : "text-slate-800"}`}>
+                      <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-300" : "text-slate-700 font-semibold"}`}>
                           
                         {log.mission_type}
                       </td>
-                      <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-300" : "text-slate-800"}`}>
+                      <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-300" : "text-slate-700 font-semibold"}`}>
                           
                         {log.duration_hours} hrs
                       </td>
-                      <td className="p-3 font-sans font-semibold text-cyan-200 text-xs">
+                      <td className={`p-3 font-sans font-semibold text-xs ${isDark ? "text-cyan-200" : "text-slate-900 font-bold"}`}>
                         {log.pilot_callsign}
                       </td>
                       <td className="p-3 font-sans text-xs">
                         <div className="flex items-center gap-1 font-sans">
-                          <span className={`font-bold ${log.g_force_peak > 7.0 ? 'text-rose-400' : 'text-slate-200'}`}>
+                          <span className={`font-bold ${log.g_force_peak > 7.0 ? (isDark ? 'text-rose-400' : 'text-rose-700 font-bold') : (isDark ? 'text-slate-200' : 'text-slate-900 font-bold')}`}>
                             {log.g_force_peak}
                           </span>
                           <span className="text-[10px] text-slate-400 font-normal">G</span>
@@ -626,12 +639,12 @@ export default function MaintenanceLogs() {
                       </td>
                       <td className="p-3">
                         {log.snags_reported > 0 ? (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-500/10 text-rose-300 border border-rose-500/25 font-sans">
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold font-sans border ${isDark ? "bg-rose-500/10 text-rose-300 border-rose-500/25" : "bg-rose-100 text-rose-800 border-rose-300 font-bold"}`}>
                             <span className="w-1.5 h-1.5 rounded-full bg-rose-400" />
                             {log.snags_reported} Snag Flagged
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/25 font-sans">
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold font-sans border ${isDark ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/25" : "bg-emerald-100 text-emerald-800 border-emerald-300 font-bold"}`}>
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                             Nominal (Nil)
                           </span>
