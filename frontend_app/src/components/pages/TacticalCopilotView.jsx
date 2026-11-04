@@ -548,8 +548,10 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
                   "{liveTranscript}"
                 </div>
               ) : (
-                <div className="p-3 rounded-xl bg-slate-900/70 border border-white/5 text-slate-300 text-xs font-sans leading-relaxed">
-                  <span className="text-cyan-400 font-bold uppercase text-[10px] block mb-0.5">Last Briefing Transmitted:</span>
+                <div className={`p-3 rounded-xl border text-xs font-sans leading-relaxed ${
+                  isDark ? 'bg-slate-900/70 border-white/5 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-800'
+                }`}>
+                  <span className={`font-bold uppercase text-[10px] block mb-0.5 ${isDark ? 'text-cyan-400' : 'text-blue-700'}`}>Last Briefing Transmitted:</span>
                   "{lastAgentSpoken.slice(0, 180)}..."
                 </div>
               )}
@@ -562,7 +564,7 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
               <h3 className={`font-bold text-sm tracking-tight mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
                 Flight Line Quick Directives
               </h3>
-              <p className="text-xs text-slate-400 mb-3">
+              <p className={`text-xs mb-3 ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>
                 Tap any directive to immediately trigger the live spoken voice briefing:
               </p>
 
@@ -586,8 +588,8 @@ I can diagnose conservative RUL safety bounds, inspect forward base spares inven
 
             <GlassCard className="p-4 flex items-center justify-between text-xs font-sans">
               <div>
-                <p className="font-bold text-slate-300">Continuous Hands Free Mode</p>
-                <p className="text-[11px] text-slate-500 mt-0.5">Talk freely without pressing mic each time</p>
+                <p className={`font-bold ${isDark ? "text-slate-300" : "text-slate-800"}`}>Continuous Hands Free Mode</p>
+                <p className={`text-[11px] mt-0.5 ${isDark ? "text-slate-500" : "text-slate-600 font-medium"}`}>Talk freely without pressing mic each time</p>
               </div>
               <button
                 onClick={() => setIsContinuousLive(!isContinuousLive)}

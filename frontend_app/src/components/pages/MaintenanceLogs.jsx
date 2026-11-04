@@ -159,7 +159,7 @@ export default function MaintenanceLogs() {
               <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 font-sans border border-emerald-500/25">
                 Proactive Hangar Execution
               </span>
-              <span className="text-xs text-slate-400 font-medium">
+              <span className={`text-xs font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                 Structured Workflows & Flight Logbooks
               </span>
             </div>
@@ -318,7 +318,8 @@ export default function MaintenanceLogs() {
                             }`}
                           >
                             {/* Header Row: Tail Number + Designation + Refined Status (No loud colored stripes) */}
-                            <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-800">
+                            <div className={`flex items-center justify-between gap-2 pb-2 border-b ${isDark ? "border-slate-800" : "border-slate-200"}`}>
+
                               <div className="flex items-center gap-1.5 min-w-0">
                                 <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-blue-600/15 text-sky-400 border border-blue-500/30 whitespace-nowrap shrink-0 flex items-center gap-1">
                                   <Plane className="w-3 h-3 text-sky-400 shrink-0" />
@@ -345,7 +346,7 @@ export default function MaintenanceLogs() {
                             {/* Order ID & Air Base (Un-truncated, clean monospace) */}
                             <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2 font-mono">
                               <span className="truncate text-slate-400">
-                                <span className="text-slate-500">WO:</span> <span className="text-slate-200 font-semibold">{wo.order_id}</span>
+                                <span className="text-slate-500">WO:</span> <span className={`font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>{wo.order_id}</span>
                               </span>
                               <span className="text-slate-400 text-[10px] whitespace-nowrap shrink-0 pl-1 flex items-center gap-1">
                                 <MapPin className="w-3 h-3 text-slate-500 shrink-0" />
@@ -365,7 +366,7 @@ export default function MaintenanceLogs() {
                             </div>
 
                             {/* Telemetry RUL Block - Clean Slate, Crisp Contrast (No Piercing Yellow) */}
-                            <div className="mt-2.5 p-2 rounded-lg bg-slate-800/60 dark:bg-slate-800/60 border border-slate-700/60 grid grid-cols-2 gap-2 text-[11px]">
+                            <div className={`mt-2.5 p-2 rounded-lg ${isDark ? "bg-slate-800/60 border-slate-700/60" : "bg-slate-50 border-slate-200"} grid grid-cols-2 gap-2 text-[11px]`}>
                               <div>
                                 <div className="text-[10px] text-slate-400 uppercase tracking-wider font-medium">Predicted RUL</div>
                                 <div className="text-xs font-bold text-sky-400 font-mono mt-0.5">
@@ -410,24 +411,27 @@ export default function MaintenanceLogs() {
                                   <UserCheck className="w-3 h-3" />
                                 </div>
                                 <div className="min-w-0">
-                                  <div className="text-[11px] font-bold text-slate-100 truncate">
+                                  <div className={`text-[11px] font-bold truncate ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+
                                     {wo.technician || 'Unassigned Crew'}
                                   </div>
-                                  <div className="text-[10px] text-slate-400 truncate">
+                                  <div className={`text-[10px] truncate ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+
                                     {wo.hangar_bay || 'Awaiting Bay Allocation'}
                                   </div>
                                 </div>
                               </div>
                               <button
                                 onClick={() => setAssignModalOrder(wo)}
-                                className="text-[10px] font-bold px-2 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 transition shrink-0"
+                                className={`text-[10px] font-bold px-2 py-1 rounded transition shrink-0 ${isDark ? "bg-slate-700 hover:bg-slate-600 text-slate-200" : "bg-slate-200 hover:bg-slate-300 text-slate-800"}`}
                               >
                                 {wo.technician ? 'Reassign' : 'Assign'}
                               </button>
                             </div>
 
                             {/* Card Footer Actions */}
-                            <div className="mt-2.5 pt-2 border-t border-slate-800 flex items-center justify-between gap-2 text-xs font-sans">
+                            <div className={`mt-2.5 pt-2 border-t flex items-center justify-between gap-2 text-xs font-sans ${isDark ? "border-slate-800" : "border-slate-200"}`}>
+
                               <span className="text-[10px] font-mono text-slate-400 truncate">
                                 STAGE: <strong className={`font-semibold ${isDark ? "text-slate-300" : "text-slate-900"}`}>{col.title}</strong>
                               </span>

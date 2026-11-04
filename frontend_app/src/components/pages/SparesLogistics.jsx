@@ -157,7 +157,7 @@ export default function SparesLogistics() {
               <div className="w-9 h-9 rounded-xl bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center shrink-0">
                 <Boxes className="w-4 h-4" />
               </div>
-              <span className="inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 border border-slate-700 font-sans font-medium whitespace-nowrap shrink-0 shadow-xs">
+              <span className={`inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full font-sans font-medium whitespace-nowrap shrink-0 shadow-xs border ${isDark ? "bg-slate-800 text-slate-200 border-slate-700" : "bg-slate-100 text-slate-800 border-slate-300 font-semibold"}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-sky-400 mr-1.5 shrink-0" />
                 Forward Wings
               </span>
@@ -166,8 +166,9 @@ export default function SparesLogistics() {
               <span className={`text-xs font-semibold font-sans tracking-wide uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                 Active LRU Inventory
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans mt-0.5">
-                {baseSpares.length || 18} <span className="text-sm font-semibold text-slate-400">Assemblies</span>
+              <h3 className={`text-2xl sm:text-3xl font-black tracking-tight font-sans mt-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+
+                {baseSpares.length || 18} <span className={`text-sm font-semibold ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>Assemblies</span>
               </h3>
             </div>
           </div>
@@ -185,7 +186,7 @@ export default function SparesLogistics() {
               <div className="w-9 h-9 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400 flex items-center justify-center shrink-0">
                 <AlertTriangle className="w-4 h-4" />
               </div>
-              <span className="inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full bg-slate-800 text-rose-200 border border-rose-600/40 font-sans font-medium whitespace-nowrap shrink-0 shadow-xs">
+              <span className={`inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full font-sans font-medium whitespace-nowrap shrink-0 shadow-xs border ${isDark ? "bg-slate-800 text-rose-200 border-rose-600/40" : "bg-rose-100 text-rose-800 border-rose-300 font-bold"}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-rose-400 mr-1.5 shrink-0" />
                 Action Required
               </span>
@@ -194,13 +195,15 @@ export default function SparesLogistics() {
               <span className={`text-xs font-semibold font-sans tracking-wide uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                 Critical Stockout Alert
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans mt-0.5">
-                {outOfStockCount} <span className="text-sm font-semibold text-rose-400">Assembly Depleted</span>
+              <h3 className={`text-2xl sm:text-3xl font-black tracking-tight font-sans mt-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+
+                {outOfStockCount} <span className={`text-sm font-semibold ${isDark ? "text-rose-400" : "text-rose-700 font-bold"}`}>Assembly Depleted</span>
               </h3>
             </div>
           </div>
           <div className="mt-3 pt-2.5 border-t border-white/5 dark:border-white/5">
-            <span className="text-xs text-rose-300/90 font-sans">
+            <span className={`text-xs font-sans ${isDark ? "text-rose-300/90" : "text-rose-800 font-semibold"}`}>
+
               HPC Rotor Blades &bull; AFS Thanjavur
             </span>
           </div>
@@ -213,7 +216,7 @@ export default function SparesLogistics() {
               <div className="w-9 h-9 rounded-xl bg-sky-500/15 border border-sky-500/30 text-sky-400 flex items-center justify-center shrink-0">
                 <Truck className="w-4 h-4" />
               </div>
-              <span className="inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 border border-slate-700 font-sans font-medium whitespace-nowrap shrink-0 shadow-xs">
+              <span className={`inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full font-sans font-medium whitespace-nowrap shrink-0 shadow-xs border ${isDark ? "bg-slate-800 text-slate-200 border-slate-700" : "bg-slate-100 text-slate-800 border-slate-300 font-semibold"}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-sky-400 mr-1.5 shrink-0" />
                 Depot Inbound
               </span>
@@ -222,13 +225,14 @@ export default function SparesLogistics() {
               <span className={`text-xs font-semibold font-sans tracking-wide uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                 Proactive Replenishment
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans mt-0.5">
-                {aiTriggers.length} <span className="text-sm font-semibold text-slate-400">Depot Inductions</span>
+              <h3 className={`text-2xl sm:text-3xl font-black tracking-tight font-sans mt-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+
+                {aiTriggers.length} <span className={`text-sm font-semibold ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>Depot Inductions</span>
               </h3>
             </div>
           </div>
           <div className="mt-3 pt-2.5 border-t border-white/5 dark:border-white/5">
-            <span className="text-xs text-slate-400 font-sans">
+            <span className={`text-xs font-sans ${isDark ? "text-slate-400" : "text-slate-600"}`}>
               Automated reorders triggered by RUL wear
             </span>
           </div>
@@ -241,7 +245,7 @@ export default function SparesLogistics() {
               <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
                 <Clock className="w-4 h-4" />
               </div>
-              <span className="inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 border border-slate-700 font-sans font-medium whitespace-nowrap shrink-0 shadow-xs">
+              <span className={`inline-flex items-center text-[10px] px-2.5 py-0.5 rounded-full font-sans font-medium whitespace-nowrap shrink-0 shadow-xs border ${isDark ? "bg-slate-800 text-slate-200 border-slate-700" : "bg-slate-100 text-slate-800 border-slate-300 font-semibold"}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 shrink-0" />
                 Within SLA
               </span>
@@ -250,13 +254,15 @@ export default function SparesLogistics() {
               <span className={`text-xs font-semibold font-sans tracking-wide uppercase ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                 Depot Turnaround Time
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans mt-0.5">
-                18.4 <span className="text-sm font-semibold text-emerald-400">Hours Avg</span>
+              <h3 className={`text-2xl sm:text-3xl font-black tracking-tight font-sans mt-0.5 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+
+                18.4 <span className={`text-sm font-semibold ${isDark ? "text-emerald-400" : "text-emerald-700 font-bold"}`}>Hours Avg</span>
               </h3>
             </div>
           </div>
           <div className="mt-3 pt-2.5 border-t border-white/5 dark:border-white/5">
-            <span className="text-xs text-emerald-300/90 font-sans">
+            <span className={`text-xs font-sans ${isDark ? "text-emerald-300/90" : "text-emerald-800 font-semibold"}`}>
+
               Base Repair Depot limit: 48.0h
             </span>
           </div>
@@ -298,10 +304,10 @@ export default function SparesLogistics() {
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="font-sans text-xs font-bold text-sky-400 tracking-tight">
+                    <span className={`font-sans text-xs font-bold tracking-tight ${isDark ? "text-sky-400" : "text-blue-700"}`}>
                       {trig.trigger_id}
                     </span>
-                    <span className="text-[11px] px-2.5 py-0.5 rounded-full font-semibold bg-white/5 text-slate-300 border border-white/10 font-sans">
+                    <span className={`text-[11px] px-2.5 py-0.5 rounded-full font-semibold font-sans border ${isDark ? "bg-white/5 text-slate-300 border-white/10" : "bg-slate-100 text-slate-800 border-slate-300 font-bold"}`}>
                       Confidence {trig.confidence_score}%
                     </span>
                   </div>
@@ -311,19 +317,19 @@ export default function SparesLogistics() {
                   </h4>
 
                   <div className={`mt-2 p-2.5 rounded-xl border text-[11px] font-sans space-y-1 ${
-                    isDark ? 'bg-black/30 border-white/5 text-slate-300' : 'bg-white border-slate-200 text-slate-700'
+                    isDark ? 'bg-black/30 border-white/5 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-800'
                   }`}>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Trigger Target:</span>
-                      <strong className="text-sky-400">Tail {trig.tail_no} ({trig.base_station})</strong>
+                      <span className={isDark ? "text-slate-400" : "text-slate-600 font-medium"}>Trigger Target:</span>
+                      <strong className={isDark ? "text-sky-400" : "text-blue-700 font-bold"}>Tail {trig.tail_no} ({trig.base_station})</strong>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Stock vs Safety:</span>
-                      <span className="text-rose-300 font-bold">{trig.current_stock} on hand / Min {trig.safety_stock}</span>
+                      <span className={isDark ? "text-slate-400" : "text-slate-600 font-medium"}>Stock vs Safety:</span>
+                      <span className={isDark ? "text-rose-300 font-bold" : "text-rose-700 font-bold"}>{trig.current_stock} on hand / Min {trig.safety_stock}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Demand Horizon:</span>
-                      <span>{trig.predicted_demand_hours} flight hours</span>
+                      <span className={isDark ? "text-slate-400" : "text-slate-600 font-medium"}>Demand Horizon:</span>
+                      <strong className={isDark ? "text-slate-200" : "text-slate-900"}>{trig.predicted_demand_hours} flight hours</strong>
                     </div>
                   </div>
 
@@ -333,7 +339,7 @@ export default function SparesLogistics() {
                 </div>
 
                 <div className="pt-2 border-t border-white/5 dark:border-white/5 flex items-center justify-between font-sans">
-                  <span className="text-[11px] text-slate-400">
+                  <span className={`text-[11px] ${isDark ? "text-slate-400" : "text-slate-600 font-medium"}`}>
                     Action: <strong className={isDark ? "text-slate-300" : "text-slate-900"}>{trig.recommended_action}</strong>
                   </span>
 
@@ -372,7 +378,7 @@ export default function SparesLogistics() {
               Multi-agency fulfillment tracking between Central Air Force Depots, HAL manufacturing, and frontline air bases
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/5 text-slate-300 border border-white/10 font-sans">
+          <div className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl font-sans border ${isDark ? "bg-white/5 text-slate-300 border-white/10" : "bg-slate-100 text-slate-800 border-slate-300"}`}>
             <Truck className="w-3.5 h-3.5 text-sky-400" />
             <span>{depotPipeline.length} Shipments in Transit</span>
           </div>
@@ -388,7 +394,7 @@ export default function SparesLogistics() {
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="font-sans text-xs font-bold text-sky-400 tracking-tight">
+                  <span className={`font-sans text-xs font-bold tracking-tight ${isDark ? "text-sky-400" : "text-blue-700"}`}>
                     {dp.req_id}
                   </span>
                   <StatusBadge status={dp.priority} size="sm" />
@@ -401,15 +407,15 @@ export default function SparesLogistics() {
                 <div className={`mt-2.5 text-xs font-sans space-y-1.5 ${isDark ? "text-slate-300" : "text-slate-800"}`}>
                   
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Target Airframe:</span>
+                    <span className={isDark ? "text-slate-400" : "text-slate-600 font-medium"}>Target Airframe:</span>
                     <strong className={isDark ? 'text-white' : 'text-slate-900'}>{dp.tail_no} &bull; {dp.base_station}</strong>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Depot Origin:</span>
-                    <span className="text-cyan-300 font-medium">{dp.depot_source || 'Central Depot'}</span>
+                    <span className={isDark ? "text-slate-400" : "text-slate-600 font-medium"}>Depot Origin:</span>
+                    <span className={isDark ? "text-cyan-300 font-medium" : "text-blue-700 font-bold"}>{dp.depot_source || 'Central Depot'}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Transit Mode:</span>
+                    <span className={isDark ? "text-slate-400" : "text-slate-600 font-medium"}>Transit Mode:</span>
                     <span className={isDark ? "text-slate-300" : "text-slate-800 font-bold"}>{dp.transit_mode || 'Air Transport Scramble'}</span>
                   </div>
                 </div>
@@ -425,7 +431,7 @@ export default function SparesLogistics() {
 
                   return (
                     <div className="mt-3.5 pt-3 border-t border-white/5 dark:border-white/5 space-y-2">
-                      <p className="text-[11px] font-sans text-slate-400 uppercase tracking-wider font-semibold">Turnaround Lifecycle</p>
+                      <p className={`text-[11px] font-sans uppercase tracking-wider font-semibold ${isDark ? "text-slate-400" : "text-slate-600 font-bold"}`}>Turnaround Lifecycle</p>
                       <div className="space-y-1.5 text-xs font-sans">
                         {steps.map((st, sIdx) => (
                           <div key={sIdx} className="flex items-center gap-2">
@@ -437,7 +443,7 @@ export default function SparesLogistics() {
                             <span className={st.done ? (isDark ? 'text-slate-200' : 'text-slate-800') : 'text-slate-500'}>
                               {st.step}
                             </span>
-                            <span className="text-[11px] text-slate-400 ml-auto">{st.time}</span>
+                            <span className={`text-[11px] ml-auto ${isDark ? "text-slate-400" : "text-slate-500 font-medium"}`}>{st.time}</span>
                           </div>
                         ))}
                       </div>
@@ -447,7 +453,7 @@ export default function SparesLogistics() {
               </div>
 
               <div className="pt-2.5 border-t border-white/5 dark:border-white/5 flex items-center justify-between font-sans text-xs">
-                <div className="flex items-center gap-1.5 text-amber-300 font-bold">
+                <div className={`flex items-center gap-1.5 font-bold ${isDark ? "text-amber-300" : "text-amber-800"}`}>
                   <Clock className="w-3.5 h-3.5 text-amber-400" />
                   <span>ETA: {dp.eta_hours} hrs</span>
                 </div>
@@ -510,7 +516,7 @@ export default function SparesLogistics() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className={`text-[11px] font-semibold tracking-wider uppercase border-b font-sans ${
-              isDark ? 'text-slate-400 bg-slate-900/60 border-white/10' : 'text-slate-500 bg-slate-100 border-slate-200'
+              isDark ? 'text-slate-400 bg-slate-900/60 border-white/10' : 'text-slate-700 bg-slate-100 border-slate-200 font-bold'
             }`}>
               <tr>
                 <th className="p-3">Assembly & Bin</th>
@@ -540,15 +546,15 @@ export default function SparesLogistics() {
                     }`}
                   >
                     <td className="p-3 font-sans">
-                      <span className="font-bold text-cyan-300 text-xs tracking-tight">{sp.item_id}</span>
-                      <p className="text-[11px] text-slate-400">{sp.location_bin}</p>
+                      <span className={`font-bold text-xs tracking-tight ${isDark ? "text-cyan-300" : "text-blue-700"}`}>{sp.item_id}</span>
+                      <p className={`text-[11px] ${isDark ? "text-slate-400" : "text-slate-600"}`}>{sp.location_bin}</p>
                     </td>
                     <td className={`p-3 font-sans font-semibold text-xs ${isDark ? 'text-white' : 'text-slate-800'}`}>
                       {sp.component_name}
-                      <p className="text-[11px] text-slate-400 font-normal">{sp.part_number}</p>
+                      <p className={`text-[11px] font-normal ${isDark ? "text-slate-400" : "text-slate-600"}`}>{sp.part_number}</p>
                     </td>
                     <td className="p-3 font-sans">
-                      <span className="px-2.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-[11px] font-medium text-slate-300">
+                      <span className={`px-2.5 py-0.5 rounded-md text-[11px] font-medium border ${isDark ? "bg-white/5 border-white/10 text-slate-300" : "bg-slate-100 border-slate-300 text-slate-800 font-semibold"}`}>
                         {sp.subsystem}
                       </span>
                     </td>
@@ -562,7 +568,7 @@ export default function SparesLogistics() {
                         }`}>
                           {sp.quantity_on_hand}
                         </span>
-                        <span className="text-[11px] font-medium text-slate-400">units</span>
+                        <span className={`text-[11px] font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>units</span>
                       </div>
                     </td>
                     <td className={`p-3 font-sans text-xs ${isDark ? "text-slate-400" : "text-slate-700 font-medium"}`}>
